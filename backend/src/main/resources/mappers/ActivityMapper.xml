@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunmo.back.dao.IActivityDao">
+    <resultMap id="map" type="activity">
+        <id column="active_id" property="active_id"></id>
+        <result column="active_content" property="active_content"></result>
+        <result column="active_time" property="active_time"></result>
+        <result column="active_type_id" property="active_type_id"></result>
+        <result column="active_img" property="active_img"></result>
+        <result column="activity_type" property="active_type"></result>
+    </resultMap>
+    <resultMap id="map1" type="activity">
+        <id column="active_id" property="active_id"></id>
+        <result column="active_content" property="active_content"></result>
+        <result column="active_time" property="active_time"></result>
+        <result column="active_type_id" property="active_type_id"></result>
+        <result column="active_img" property="active_img"></result>
+        <association property="activityType" column="active_type_id" select="com.yunmo.back.dao.IActivity_typeDao.selectById"></association>
+    </resultMap>
+
+    <select id="selectAllActive" resultMap="map">
+        select t1.*,t2.activity_type from activity t1 join activity_type t2 on t1.active_type_id=t2.active_type_id
+    </select>
+    <select id="activityIPage" resultMap="map1">
+        select * from activity ${ew.customSqlSegment}
+    </select>
+</mapper>

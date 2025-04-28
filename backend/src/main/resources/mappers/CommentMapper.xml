@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunmo.back.dao.ICommentDao">
+<resultMap id="map1" type="comment">
+    <id column="comment_id" property="comment_id"/>
+    <id column="content" property="content"/>
+    <id column="user_id" property="user_id"/>
+    <association property="users" column="user_id" javaType="Users" select="selectUserById"/>
+</resultMap>
+    <select id="selectUserById" resultType="users">
+        select * from users where user_id=#{user_id}
+    </select>
+    <select id="getComments" resultMap="map1">
+        select c.*,u.*
+            from comment c
+                left join users u on c.user_id=u.user_id
+        where c.poem_id=#{poemId}
+    </select>
+    <insert id="submitComment" parameterType="comment">
+        insert into comment values (null,#{content},now(),#{poem_id},#{user_id})
+    </insert>
+</mapper>

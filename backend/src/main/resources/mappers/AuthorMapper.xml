@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunmo.back.dao.IAuthorDao">
+    <resultMap id="map" type="com.yunmo.back.pojo.Author">
+        <id column="author_id" property="author_id"></id>
+        <result column="author_gender" property="author_gender"></result>
+        <result column="author_img" property="author_img"></result>
+        <result column="author_intro" property="author_intro"></result>
+        <result column="author_name" property="author_name"></result>
+        <result column="author_style" property="author_style"></result>
+        <association property="dynasty" column="dynasty_id" select="com.yunmo.back.dao.IDynastyDao.selectById"></association>
+    </resultMap>
+    <select id="findByDynastyidAuthor" resultType="com.yunmo.back.utileClass.DynastyAuthor">
+        select * from author t1 ,dynasty t2 where t1.dynasty_id=t2.dynasty_id and t1.dynasty_id=#{id}
+    </select>
+    <select id="findDynastyAuthorByPage" resultMap="map">
+        select * from author
+    </select>
+</mapper>

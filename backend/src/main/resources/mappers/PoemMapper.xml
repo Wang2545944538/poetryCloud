@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunmo.back.dao.IPoemDao">
+
+    <resultMap id="map1" type="poem">
+        <id column="poem_id" property="poem_id"/>
+        <id column="author_id" property="author_id"/>
+        <id column="genre_id" property="genre_id"/>
+        <id column="theme_id" property="theme_id"/>
+        <association property="author" column="author_id" javaType="Author" select="selectAuthorById" />
+        <association property="genre" column="genre_id" javaType="Genre" select="selectGenreById" />
+        <association property="theme" column="theme_id" javaType="Theme" select="selectThemeById" />
+        <association property="poeminformation" column="pf_id" javaType="Poeminformation" select="selectPoeminformationById" />
+    </resultMap>
+
+    <resultMap id="map2" type="author">
+        <id column="author_id" property="author_id"/>
+        <id column="dynasty_id" property="dynasty_id"/>
+        <association property="dynasty" column="dynasty_id" javaType="Dynasty" select="selectDynastyById"/>
+    </resultMap>
+
+    <resultMap id="map3" type="poem">
+        <id column="poem_id" property="poem_id"/>
+        <id column="author_id" property="author_id"/>
+        <association property="author" column="author_id" javaType="Author" select="selectAuthorById" />
+        <association property="poeminformation" column="pf_id" javaType="Poeminformation" select="selectPoeminformationById" />
+    </resultMap>
+
+    <select id="getPoemDetails" resultMap="map1">
+        SELECT p.*, a.*,g.*, t.*, pf.*
+        FROM poem p
+                 LEFT JOIN author a ON p.author_id = a.author_id
+                 LEFT JOIN genre g ON p.genre_id = g.genre_id
+                 LEFT JOIN theme t ON p.theme_id = t.theme_id
+                 LEFT JOIN poeminformation pf ON p.pf_id = pf.pf_id where poem_id=#{poem_id}
+    </select>
+
+    <!-- select author-->
+    <select id="selectAuthorById" resultMap="map2">
+        SELECT * FROM author WHERE author_id = #{author_id}
+    </select>
+
+    <!-- select dynasty-->
+    <select id="selectDynastyById" resultType="dynasty">
+        select * from dynasty where dynasty_id = #{dynasty_id}
+    </select>
+
+    <!-- select genre-->
+    <select id="selectGenreById" resultType="genre">
+        select * from genre where genre_id = #{genre_id}
+    </select>
+
+    <!-- select theme -->
+    <select id="selectThemeById" resultType="theme">
+        SELECT * FROM theme WHERE theme_id = #{theme_id}
+    </select>
+
+    <!-- select poemimformation-->
+    <select id="selectPoeminformationById" resultType="poeminformation">
+        SELECT * FROM poeminformation WHERE pf_id = #{pf_id}
+    </select>
+
+    <!-- select poems-->
+    <select id="getPoems" resultMap="map3">
+        SELECT p.*, a.*, pf.*
+        FROM poem p
+                 LEFT JOIN author a ON p.author_id = a.author_id
+                 LEFT JOIN poeminformation pf ON p.pf_id = pf.pf_id
+        <where>
+            <if test="authorIds != null">
+            AND
+                <foreach collection="authorIds" item="authorId" open="(" separator="OR" close=")">
+                    p.author_id = #{authorId}
+                </foreach>
+            </if>
+            <if test="dynastyIds != null">
+            AND
+                <foreach collection="dynastyIds" item="dynastyId" open="(" separator="OR" close=")">
+                    a.dynasty_id = #{dynastyId}
+                </foreach>
+            </if>
+            <if test="genreIds != null">
+            AND
+                <foreach collection="genreIds" item="genreId" open="(" separator="OR" close=")">
+                    p.genre_id = #{genreId}
+                </foreach>
+            </if>
+            <if test="themeIds != null">
+            AND
+                <foreach collection="themeIds" item="themeId" open="(" separator="OR" close=")">
+                    p.theme_id = #{themeId}
+                </foreach>
+            </if>
+            <if test="title!=null and title!=''">
+            AND     p.title like CONCAT('%', #{title}, '%')
+            </if>
+            AND p.isself = 0
+        </where>
+        ORDER BY p.poem_id
+    </select>
+
+    <select id="findByIdPoems" resultType="com.yunmo.back.pojo.Poem">
+        select * from poem where author_id=#{author_id};
+    </select>
+
+    <update id="updatePoem">
+        UPDATE poem
+        SET author_id=#{author_id},
+            title=#{title},
+            content=#{content},
+            genre_id=#{genre_id},
+            theme_id=#{theme_id},
+            intro=#{intro}
+        WHERE poem_id=#{poem_id};
+    </update>
+    <update id="updatePoemInformation">
+        UPDATE poeminformation
+        SET pingxi=#{pingxi},
+            comments=#{comments},
+            translation=#{translation},
+            jiping=#{jiping}
+        WHERE pf_id=#{pf_id};
+    </update>
+    <delete id="deletePoem">
+        delete from poem where poem_id=#{poem_id}
+    </delete>
+    <delete id="deletePoemInformation">
+        delete from poeminformation where pf_id=#{pf_id}
+    </delete>
+    <insert id="addPoemInformation" useGeneratedKeys="true" keyProperty="pf_id">
+        insert into poeminformation values (null,#{pingxi},#{comments},#{translation},#{jiping})
+    </insert>
+    <insert id="addPoem">
+        insert into poem values (null,#{author_id},#{title},#{content},#{genre_id},
+                                 #{theme_id},#{pf_id},0,0,#{intro})
+    </insert>
+</mapper>

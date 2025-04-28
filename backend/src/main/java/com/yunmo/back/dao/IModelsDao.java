@@ -1,0 +1,19 @@
+package com.yunmo.back.dao;
+
+import com.yunmo.back.pojo.Models;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+import java.util.List;
+
+/**
+ * <p>
+ *  Mapper 接口
+ * </p>
+ *
+ * @author wwj
+ * @since 2024-09-12
+ */
+public interface IModelsDao extends BaseMapper<Models> {
+
+    List<Models> getModelsById(Integer userId);
+}

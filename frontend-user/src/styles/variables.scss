@@ -1,0 +1,26 @@
+// 基础颜色定义
+$primary-color: #3498db; // 主色调$secondary-color: #2ecc71; // 次要色调
+$accent-color: #f1c40f; // 强调色
+
+// 文字颜色
+$text-color: #333; // 默认文字颜色$text-light: #777; // 较浅的文字颜色
+$text-dark: #222; // 较深的文字颜色
+
+// 背景颜色
+$background-color: #fff; // 默认背景颜色$background-light: #f9f9f9; // 浅色背景
+$background-dark: #2c3e50; // 深色背景
+
+// 边框颜色
+$border-color: #ddd; // 默认边框颜色
+
+// 布局相关
+$container-width: 1200px; // 容器宽度$gutter-width: 20px; // 间隔宽度
+
+// 字体定义
+$font-family-sans-serif: 'Helvetica Neue', Helvetica, Arial, sans-serif;$font-family-serif: Georgia, 'Times New Roman', Times, serif;
+$font-size-base: 16px; // 基础字体大小$line-height-base: 1.6; // 基础行高
+
+// 其他变量
+$transition-speed: 0.3s; // 动画过渡时间$border-radius: 4px; // 边框圆角大小
+
+// ... 你可以根据项目需要添加更多的变量

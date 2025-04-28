@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunmo.back.dao.IUsers_collectionDao">
+    <resultMap id="map" type="users_collection">
+        <id column="collection_id" property="collection_id"></id>
+        <result column="user_id" property="user_id"></result>
+        <collection property="collection" column="collection_id" javaType="list"
+                    select="com.yunmo.back.dao.ICollectionDao.selectById"></collection>
+    </resultMap>
+    <select id="getAllCollectionById" resultMap="map">
+        select * from users_collection ${ew.customSqlSegment}
+    </select>
+    <select id="getAllCollection" resultMap="map">
+        select * from users_collection ${ew.customSqlSegment}
+    </select>
+</mapper>

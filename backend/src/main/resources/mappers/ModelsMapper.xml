@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunmo.back.dao.IModelsDao">
+
+
+    <resultMap id="m" type="com.yunmo.back.pojo.Models">
+        <id column="model_id" property="model_id"/>
+        <collection property="childMods" column="model_id" select="getChildMods"/>
+    </resultMap>
+
+    <select id="getModelsById" resultMap="m">
+        select distinct m.* from users
+            left join yunmo.type t on users.type_id = t.type_id
+            left join yunmo.models m on t.model_id = m.model_id
+        where user_id=1 and parent_models=0
+    </select>
+
+    <select id="getChildMods" resultType="com.yunmo.back.pojo.Models">
+        select * from models where parent_models=#{model_id}
+    </select>
+
+
+</mapper>
