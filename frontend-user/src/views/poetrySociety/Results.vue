@@ -1,4 +1,3 @@
-
 <template>
   <el-container>
     <!-- 左侧 Aside -->
@@ -68,6 +67,21 @@ const correctCount = ref(0);
 
 const score = ref(0); // 新增：积分变量
 
+// 更新此函数以同时计算正确答案数量和积分
+const calculateCorrectCountAndScore = () => {
+  let count = 0;
+  let points = 0; // 积分初始化
+  for (let i = 0; i < questions.value.length; i++) {
+    if (questions.value[i].answer === results.value[i]) {
+      count++;
+      points += 1; // 每答对一题加10分
+    }
+  }
+  correctCount.value = count;
+  score.value = points; // 更新积分
+
+};
+
 watchEffect(() => {
   if (route.query.answers) {
     try {
@@ -98,7 +112,7 @@ const nextQuestion = () => {
   }
 };
 
-// 更新此函数以同时计算正确答案数量和积分
+/*// 更新此函数以同时计算正确答案数量和积分
 const calculateCorrectCountAndScore = () => {
   let count = 0;
   let points = 0; // 积分初始化
@@ -111,7 +125,7 @@ const calculateCorrectCountAndScore = () => {
   correctCount.value = count;
   score.value = points; // 更新积分
 
-};
+};*/
 
 
 const addScore=()=>{

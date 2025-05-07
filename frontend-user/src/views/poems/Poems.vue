@@ -70,7 +70,6 @@ const handleSearch = () => {
       style="background-image: url('src/images/img/8278cfb64ef52c5ac6938f5d735268c443073da888ee04-M0W8m6.jpeg');"
   >
 
-    <body>
     <div class="search-container">
       <input
           type="text"
@@ -80,7 +79,7 @@ const handleSearch = () => {
       />
       <button id="search-btn" @click="handleSearch">搜索</button>
     </div>
-    </body>
+
     <div class="horizontal-scroll-wrapper">
       <template
           v-for="(item, index) in data.collections"
@@ -92,9 +91,9 @@ const handleSearch = () => {
             <div class="h2" style="font-size: 25px;text-align: center;">{{ item.collection_name }}</div>
           </div>
         </router-link>
-        </template>
-
+      </template>
     </div>
+
   </div>
 </template>
 
