@@ -26,7 +26,7 @@ public class Poem_collection implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "collection_id", type = IdType.AUTO)
+    @TableField(value = "collection_id")
     private Integer collection_id;
 
     @TableField("poem_id")

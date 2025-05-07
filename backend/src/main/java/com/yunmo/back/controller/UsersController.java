@@ -49,11 +49,13 @@ public class UsersController {
             //jwt token
             String uuid = UUID.randomUUID().toString();
             String subject = "{'userid':" + u.getUser_id() +
-                    ",'account':'" + u.getUsername() + "','nickname':'"+u.getNickname()+"','avatar':'"+u.getAvatar()+"'}";
-            //30分钟过期，时间毫秒
-            String jwtToken = JwtUtils.createJWT(uuid,subject,1000*60*3000);
+                    ",'account':'" + u.getUsername() +
+                    "','nickname':'" + u.getNickname() +
+                    "','avatar':'" + u.getAvatar() +
+                    "','type_id':" + u.getType_id() + "}";
 
-            redisUtils.set(jwtToken,users,100000);
+            String jwtToken = JwtUtils.createJWT(uuid, subject, 1000 * 60 * 3000); // 30分钟
+            redisUtils.set(jwtToken, users, 100000);
             return ResponseMsg.loginSuccess(jwtToken);
         }else {
             return ResponseMsg.loginFail();

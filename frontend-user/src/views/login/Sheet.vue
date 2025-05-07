@@ -20,7 +20,7 @@ function ready() {
   ElMessage.info('该功能待开发')
 }
 function openMask() {
-  // 新建歌单操作 页面稍微变灰，屏幕中间有一个歌单名输入框
+  // 新建诗集操作 页面稍微变灰，屏幕中间有一个诗集名输入框
   document.getElementById('mask').style.display = 'flex'
 }
 function newSheet() {
@@ -34,15 +34,15 @@ function newSheet() {
     // 歌名最多20个字
     ElMessage.error('诗集名最多20个字！！')
   } else {
-    // 最后一步检验 向后端发请求添加歌单 检验歌单名是否有重复 然后如果成功 增添
+    // 最后一步检验 向后端发请求添加诗集 检验诗集名是否有重复 然后如果成功 增添
     const formData = {
       "collection_name": addSheetName.value.trim(),
       "collection_avatar":'defaultPoems.jpg'
     }
     axios.post("/collection/addPoems",formData).then((res)=>{
       if (res.code==200) {
-        ElMessage.success("成功添加到新建歌单")
-        // 将新创建的歌单添加到列表中
+        ElMessage.success("成功添加到新建诗集")
+        // 将新创建的诗集添加到列表中
         sheetInfo.value.push(newFolder);
         quitMask()
       } else {
@@ -92,13 +92,13 @@ const getList=()=>{
     console.log(err.data)
   })
 }
-// 先是发个请求获取用户的歌单数据
+// 先是发个请求获取用户的诗集数据
 onMounted(()=> {
   getList();
 })
 
 function gotoDetail(id) {
-  // 跳转到歌单详细页面
+  // 跳转到诗集详细页面
   router.push({name:'LookCollection',params:{collection_id:id}})
 }
 

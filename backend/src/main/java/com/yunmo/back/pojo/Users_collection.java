@@ -34,7 +34,7 @@ public class Users_collection implements Serializable {
         this.user_id = user_id;
     }
 
-    @TableId(value = "collection_id" , type = IdType.AUTO)
+    @TableField(value = "collection_id")
     private Integer collection_id;
 
     @TableField("user_id")

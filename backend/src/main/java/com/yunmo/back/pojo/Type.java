@@ -23,7 +23,7 @@ public class Type implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "type_id" , type = IdType.AUTO)
+    @TableField("type_id")
     private Integer type_id;
 
     @TableField("type_name")

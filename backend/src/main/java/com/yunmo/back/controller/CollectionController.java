@@ -104,7 +104,7 @@ public class CollectionController {
         return new ResponseMsg(200,collectionService.listByIds(list2));
     }
     //收藏
-    @RequestMapping("/doCollection")
+    /*@RequestMapping("/doCollection")
     ResponseMsg doCollection(@RequestBody doCl doCl){
         Integer collection_id = doCl.getSelectedCollectionId();
         Integer poem_id = doCl.getPoem_id();
@@ -116,6 +116,32 @@ public class CollectionController {
             return new ResponseMsg(500,"诗已经存在于该诗集中");
         }else {
             return new ResponseMsg(200,poem_collectionService.save(new Poem_collection(collection_id,poem_id)));
+        }
+    }*/
+    @RequestMapping("/doCollection")
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseMsg doCollection(@RequestBody doCl doCl){
+        Integer collection_id = doCl.getSelectedCollectionId();
+        Integer poem_id = doCl.getPoem_id();
+
+        QueryWrapper<Poem_collection> wrapper = new QueryWrapper<>();
+        wrapper.eq("collection_id", collection_id);
+        wrapper.eq("poem_id", poem_id);
+
+        Poem_collection isExist = poem_collectionService.getOne(wrapper);
+        if (isExist != null) {
+            return new ResponseMsg(500, "诗已经存在于该诗集中");
+        } else {
+            boolean saved = poem_collectionService.save(new Poem_collection(collection_id, poem_id));
+            if (saved) {
+                // 更新 collection 表中的 collection_count +1
+                UpdateWrapper<Collection> updateWrapper = new UpdateWrapper<>();
+                updateWrapper.eq("collection_id", collection_id).setSql("collection_count = collection_count + 1");
+                collectionService.update(updateWrapper);
+                return new ResponseMsg(200, "收藏成功");
+            } else {
+                return new ResponseMsg(201, "收藏失败");
+            }
         }
     }
     @Data
