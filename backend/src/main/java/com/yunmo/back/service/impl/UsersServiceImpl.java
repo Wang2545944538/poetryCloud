@@ -18,5 +18,4 @@ import org.springframework.stereotype.Service;
 @Service
 public class UsersServiceImpl extends ServiceImpl<IUsersDao, Users> implements IUsersService {
 
-
 }

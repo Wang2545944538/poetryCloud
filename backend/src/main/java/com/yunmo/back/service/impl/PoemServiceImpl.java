@@ -14,6 +14,7 @@ import com.yunmo.back.utileClass.uPoem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -41,9 +42,15 @@ public class PoemServiceImpl extends ServiceImpl<IPoemDao, Poem> implements IPoe
                                 List<Integer> authorIds, List<Integer> dynastyIds,
                                 List<Integer> genreIds, List<Integer> themeIds,
                                 String title) {
+        System.out.println("IPage<Poem> getPoems(Integer currentPage, Integer pageSize, ::::1" + title);
+        if(StringUtils.isEmpty(title)){
+            Page<Poem> page = new Page<>(currentPage, pageSize);
+            return poemDao.getPoems(page,authorIds,dynastyIds,genreIds,themeIds,null);
+        }
         Page<Poem> page = new Page<>(currentPage, pageSize);
         return poemDao.getPoems(page,authorIds,dynastyIds,genreIds,themeIds,title);
     }
+
     @Override
     public Poem getPoemDetails(Integer poem_id) {
         return poemDao.getPoemDetails(poem_id);

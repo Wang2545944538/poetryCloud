@@ -64,39 +64,52 @@
     <select id="getPoems" resultMap="map3">
         SELECT p.*, a.*, pf.*
         FROM poem p
-                 LEFT JOIN author a ON p.author_id = a.author_id
-                 LEFT JOIN poeminformation pf ON p.pf_id = pf.pf_id
+        LEFT JOIN author a ON p.author_id = a.author_id
+        LEFT JOIN dynasty d ON a.dynasty_id = d.dynasty_id
+        LEFT JOIN poeminformation pf ON p.pf_id = pf.pf_id
+        LEFT JOIN theme t ON p.theme_id = t.theme_id
+        LEFT JOIN genre g ON p.genre_id = g.genre_id
         <where>
             <if test="authorIds != null">
-            AND
+                AND
                 <foreach collection="authorIds" item="authorId" open="(" separator="OR" close=")">
                     p.author_id = #{authorId}
                 </foreach>
             </if>
             <if test="dynastyIds != null">
-            AND
+                AND
                 <foreach collection="dynastyIds" item="dynastyId" open="(" separator="OR" close=")">
                     a.dynasty_id = #{dynastyId}
                 </foreach>
             </if>
             <if test="genreIds != null">
-            AND
+                AND
                 <foreach collection="genreIds" item="genreId" open="(" separator="OR" close=")">
                     p.genre_id = #{genreId}
                 </foreach>
             </if>
             <if test="themeIds != null">
-            AND
+                AND
                 <foreach collection="themeIds" item="themeId" open="(" separator="OR" close=")">
                     p.theme_id = #{themeId}
                 </foreach>
             </if>
-            <if test="title!=null and title!=''">
-            AND     p.title like CONCAT('%', #{title}, '%')
+            <if test="title != null and title != ''">
+                AND (
+                p.title LIKE CONCAT('%', #{title}, '%')
+                OR a.author_name LIKE CONCAT('%', #{title}, '%')
+                OR d.dynasty_name LIKE CONCAT('%', #{title}, '%')
+                OR pf.pingxi LIKE CONCAT('%', #{title}, '%')
+                OR t.t_type LIKE CONCAT('%', #{title}, '%')
+                OR g.g_type LIKE CONCAT('%', #{title}, '%')
+                )
             </if>
             AND p.isself = 0
         </where>
         ORDER BY p.poem_id
+    </select>
+    <select id="findByIdPoems" resultType="com.yunmo.back.pojo.Poem">
+        select * from poem where author_id=#{author_id};
     </select>
 
     <select id="findByIdPoems" resultType="com.yunmo.back.pojo.Poem">
