@@ -46,7 +46,7 @@ const rules = ref({
 });
 //先直接跳
 // const route = useRouter();
-const submitForm = () => {
+/*const submitForm = () => {
   formRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;
@@ -62,11 +62,22 @@ const submitForm = () => {
           const subObj = JSON.parse(sub.replace(/'/g, '"'));
           const avatar = subObj.avatar;
           const nickname = subObj.nickname;
+          const type_id = subObj.type_id;
           localSet('nickname',nickname)
           localSet('avatar', avatar);
           // 确保 useRouter 被正确导入并使用
 
-          router.push({ path: '/' ,params:{user_id:subObj.user_id}});
+          // router.push({ path: '/' ,params:{user_id:subObj.user_id}});
+          if (type_id === 3) {
+            router.push({ path: '/', params: { user_id: subObj.user_id } });
+          } else {
+            ElMessage({
+              showClose: true,
+              message: "该账号不是管理员，无法进入后台系统！",
+              type: "error",
+              duration: 3000
+            });
+          }
         } else {
           ElMessage({
             showClose: true,
@@ -91,16 +102,82 @@ const submitForm = () => {
       return false;
     }
   });
+};*/
+const submitForm = () => {
+  formRef.value.validate((valid) => {
+    if (valid) {
+      loading.value = true;
+      axios.post("/users/login", {
+        username: form.value.username,
+        password: md5(form.value.password)
+      }).then(res => {
+        if (res.code === 200) {
+          localSet('token', res.data);
+          const decoded = parseJwt(res.data);
+          const { avatar, nickname, type_id, userid } = decoded.user;
+
+          localSet('nickname', nickname);
+          localSet('avatar', avatar);
+
+          if (type_id === 3) {
+            // 管理员，跳转首页或后台
+            router.push({ path: '/', params: { user_id: userid } });
+          } else {
+            // 普通用户提示
+            ElMessage({
+              showClose: true,
+              message: "该账号不是管理员，无法进入后台系统！",
+              type: "error",
+              duration: 3000
+            });
+          }
+        } else {
+          ElMessage({
+            showClose: true,
+            message: "账号或密码错误",
+            duration: 2000,
+            type: "error"
+          });
+        }
+      }).catch(error => {
+        console.error('登录请求失败', error);
+        ElMessage({
+          showClose: true,
+          message: "登录请求失败",
+          duration: 2000,
+          type: "error"
+        });
+      }).finally(() => {
+        loading.value = false;
+      });
+    } else {
+      ElMessage.error('请填写完整信息');
+      return false;
+    }
+  });
 };
 
+
 //解析token
-function parseJwt(token) {
+/*function parseJwt(token) {
   var base64Url = token.split('.')[1];
   var base64 = base64Url.replace('-', '+').replace('_', '/');
   var payload = decodeURIComponent(atob(base64).split('').map(function(c) {
     return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
   }).join(''));
   return JSON.parse(payload);
+}*/
+function parseJwt(token) {
+  const base64Url = token.split('.')[1];
+  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  const payload = decodeURIComponent(atob(base64).split('').map(function (c) {
+    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+  }).join(''));
+  const parsed = JSON.parse(payload);
+  if (parsed.sub) {
+    parsed.user = JSON.parse(parsed.sub.replace(/'/g, '"'));
+  }
+  return parsed;
 }
 
 

@@ -157,7 +157,7 @@ const toAvatar=()=>{
 }
 
 .items {
-  color: #333333;
+  color: #ffffff;
   background: rgba(0,0,0,0.1);
   position: absolute;
   height: 57px;

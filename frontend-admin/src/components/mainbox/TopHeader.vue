@@ -48,10 +48,14 @@ const userImg =() => {
 };
 
 const handleLogout=()=>{
-    localGet("token")
+    /*localGet("token")
     localGet("nickname")
     localGet("avatar")
-    router.push("/login")
+    router.push("/login")*/
+  localStorage.removeItem("token");
+  localStorage.removeItem("nickname");
+  localStorage.removeItem("avatar");
+  router.push("/login");
 }
 </script>
 

@@ -282,7 +282,7 @@ i {
   height: 38px;
   line-height: 38px;
   font-size: 14px;
-//padding: 0 23px;
+  padding: 0 23px;
   width: 125.6px;
   box-sizing: border-box;
   border-color: #c9c9c9;
