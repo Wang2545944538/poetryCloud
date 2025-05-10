@@ -4,6 +4,7 @@ import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/user/',
   plugins: [vue()],
   dev: {
     port: '5173', // 指定启动端口
