@@ -3,55 +3,59 @@ name: Frontend Deploy to Server
 on:
   push:
     branches:
-      - main
+      - main  # 监听 main 分支
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
 
-    # === 构建 frontend-user ===
-    - name: Install dependencies (frontend-user)
-      working-directory: ./frontend-user
-      run: npm install --registry=https://registry.npmmirror.com
+      # ------------------------
+      # 构建 frontend-user
+      # ------------------------
+      - name: Install dependencies (frontend-user)
+        working-directory: ./frontend-user
+        run: npm install --registry=https://registry.npmmirror.com
 
-    - name: Build project (frontend-user)
-      working-directory: ./frontend-user
-      run: npm run build
+      - name: Build project (frontend-user)
+        working-directory: ./frontend-user
+        run: npm run build
 
-    - name: Upload frontend-user to server
-      uses: appleboy/scp-action@v0.1.6
-      with:
-        host: ${{ secrets.SERVER_HOST }}
-        username: ${{ secrets.SERVER_USER }}
-        password: ${{ secrets.SERVER_PASSWORD }}
-        port: 22
-        source: "frontend-user/dist/*"
-        target: "/usr/share/nginx/html/user"
+      - name: Upload frontend-user to server
+        uses: appleboy/scp-action@v0.1.6
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          port: 22
+          source: "./frontend-user/dist/*"
+          target: "/usr/share/nginx/html/user"
 
-    # === 构建 frontend-admin ===
-    - name: Install dependencies (frontend-admin)
-      working-directory: ./frontend-admin
-      run: npm install --registry=https://registry.npmmirror.com
+      # ------------------------
+      # 构建 frontend-admin
+      # ------------------------
+      - name: Install dependencies (frontend-admin)
+        working-directory: ./frontend-admin
+        run: npm install --registry=https://registry.npmmirror.com
 
-    - name: Build project (frontend-admin)
-      working-directory: ./frontend-admin
-      run: npm run build
+      - name: Build project (frontend-admin)
+        working-directory: ./frontend-admin
+        run: npm run build
 
-    - name: Upload frontend-admin to server
-      uses: appleboy/scp-action@v0.1.6
-      with:
-        host: ${{ secrets.SERVER_HOST }}
-        username: ${{ secrets.SERVER_USER }}
-        password: ${{ secrets.SERVER_PASSWORD }}
-        port: 22
-        source: "frontend-admin/dist/*"
-        target: "/usr/share/nginx/html/admin"
+      - name: Upload frontend-admin to server
+        uses: appleboy/scp-action@v0.1.6
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          port: 22
+          source: "./frontend-admin/dist/*"
+          target: "/usr/share/nginx/html/admin"
