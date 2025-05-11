@@ -7,7 +7,7 @@ import { localGet } from './index'
 // 后端接口地址。
 
 // 这边由于后端没有区分测试和正式，姑且都写成一个接口。
-axios.defaults.baseURL = "http://127.0.0.1:5180/"
+axios.defaults.baseURL = "http://118.31.229.234:5180/"
 // 携带 cookie，对目前的项目没有什么作用，因为我们是 token 鉴权
 axios.defaults.withCredentials = true
 // 请求头，headers 信息
