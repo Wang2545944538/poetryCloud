@@ -161,7 +161,7 @@ const scrollLeft = () => {
 .text {
     width: 200px;
     height: 200px;
-    background-image: url(../../images/img/back.png);
+    background-image: url(/user/images/img/back.png);
     background-size: contain;
     background-position: center center;
     background-repeat: no-repeat;

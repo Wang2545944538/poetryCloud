@@ -32,21 +32,21 @@ const router = createRouter({
             name: 'profile',
             component: () => import('../views/login/Profile.vue'), children:
                 [
-                    {
-                        path: '/profile/like',
-                        name: 'mineLike',
-                        component: () => import('../views/login/Like.vue')
-                    },
+                    // {
+                    //     path: '/profile/like',
+                    //     name: 'mineLike',
+                    //     component: () => import('../views/login/Like.vue')
+                    // },
                     {
                         path: '/profile/sheet',
                         name: 'mineSheet',
                         component: () => import('../views/login/Sheet.vue')
                     },
-                    {
-                        path: '/profile/recent',
-                        name: 'mineRecent',
-                        component: () => import('../views/login/Recent.vue')
-                    },
+                    // {
+                    //     path: '/profile/recent',
+                    //     name: 'mineRecent',
+                    //     component: () => import('../views/login/Recent.vue')
+                    // },
                     {
                         path: '/profile/MyWrite',
                         name: 'MyWrite',

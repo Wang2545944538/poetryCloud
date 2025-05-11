@@ -21,10 +21,10 @@ import { ref } from 'vue'
 import { Search } from '@element-plus/icons-vue'
 
 const images = [
-    { src: '../src/images/img/1.jpeg', alt: '图片1', text: '王勃-《滕王阁序》', text2: '落霞与孤鹜齐飞，秋水共长天一色' },
-    { src: '../src/images/img/3.jpeg', alt: '图片2', text: '李白-《清平调·其一》', text2: '云想衣裳花想容，春风拂槛露华浓' },
-    { src: '../src/images/img/2.webp', alt: '图片3', text: '元稹-《离思五首·其四》', text2: '曾经沧海难为水，除却巫山不是云' },
-    { src: '../src/images/img/4.jpeg', alt: '图片4', text: '高适-《别董大》', text2: '莫愁前路无知己，天下谁人不识君' }
+    { src: '/user/images/img/1.jpeg', alt: '图片1', text: '王勃-《滕王阁序》', text2: '落霞与孤鹜齐飞，秋水共长天一色' },
+    { src: '/user/images/img/3.jpeg', alt: '图片2', text: '李白-《清平调·其一》', text2: '云想衣裳花想容，春风拂槛露华浓' },
+    { src: '/user/images/img/2.webp', alt: '图片3', text: '元稹-《离思五首·其四》', text2: '曾经沧海难为水，除却巫山不是云' },
+    { src: '/user/images/img/4.jpeg', alt: '图片4', text: '高适-《别董大》', text2: '莫愁前路无知己，天下谁人不识君' }
 ]
 
 

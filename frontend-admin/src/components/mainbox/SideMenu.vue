@@ -1,7 +1,7 @@
 <template>
     <div class="head">
         <div>
-            <img src="../../image/icon/诗词.png" alt="logo">
+            <img src="/admin/image/icon/诗词.png" alt="logo">
             <span>云墨诗苑</span>
         </div>
     </div>

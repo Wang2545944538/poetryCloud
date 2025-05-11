@@ -11,11 +11,11 @@ const handleAdd = () => {
   <div class="relative py-16">
     <div class="relative_box">
       <div class="image-container" style="width: 100%">
-        <img src="@/images/write/images1.webp" alt="image1" class="rounded-image1">
-        <img src="@/images/write/images3.webp" alt="image3" class="rounded-image2">
-        <img src="@/images/write/images2.webp" alt="image2" class="rounded-image3">
-        <img src="@/images/write/images4.webp" alt="image4" class="rounded-image4">
-        <img src="@/images/write/images5.webp" alt="image5" class="rounded-image5">
+        <img src="/user/images/write/images1.webp" alt="image1" class="rounded-image1">
+        <img src="/user/images/write/images3.webp" alt="image3" class="rounded-image2">
+        <img src="/user/images/write/images2.webp" alt="image2" class="rounded-image3">
+        <img src="/user/images/write/images4.webp" alt="image4" class="rounded-image4">
+        <img src="/user/images/write/images5.webp" alt="image5" class="rounded-image5">
       </div>
       <div class="mt-6 m-auto space-y-6 md:w-8/12 lg:w-7/12">
         <h2 class="bz1">

@@ -2,7 +2,7 @@
   <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" :ellipsis="false"
     @select="handleSelect">
     <el-menu-item index="0">
-      <img style="width: 55px" src="../images/icon/诗词大全.png" alt="Element logo" />
+      <img style="width: 55px" src="/user/images/icon/诗词大全.png" alt="Element logo" />
       <el-text class="mx-1"
         style="margin-left: 15px; font-size: 28px; color: black; font-family: 'MyCustomFont', sans-serif;">云墨诗苑</el-text>
     </el-menu-item>
@@ -31,7 +31,7 @@
       <template v-else>
       <el-dropdown trigger="hover">
         <img style="width: 40px;height: 40px; margin-top: 10px; cursor: pointer; outline: none;"
-          src="../images/icon/user.webp" alt="用户菜单">
+          src="/user/images/icon/user.webp" alt="用户菜单">
         <template #dropdown>
           <el-dropdown-menu class="login_icon">
             <el-dropdown-item @click="toLogin">登录</el-dropdown-item>

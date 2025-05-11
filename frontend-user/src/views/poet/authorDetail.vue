@@ -6,7 +6,7 @@
             <h1>{{ author.author_name }}</h1>
         </el-header>
         <div class="back" @click="goBack">
-            <img src="../../images/icon/back.webp" style="width: 35px;" alt="">
+            <img src="/user/images/icon/back.webp" style="width: 35px;" alt="">
             <p class="back_text" style="">返回</p>
         </div>
         <el-main>
@@ -125,7 +125,7 @@ color: #666;
 .background_img {
     width: 100%;
     height: 30vh;
-    background-image: url(../../images/img/白露.jpg);
+    background-image: url(/user/images/img/白露.jpg);
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;

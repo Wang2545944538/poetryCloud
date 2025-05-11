@@ -267,7 +267,7 @@ i {
   margin-right: -4px;
   margin-left: -6px;
   display: inline-block;
-  background: url("http://localhost:5173/src/assets/img/total.png") no-repeat ;
+  /* background: url("http://localhost:5173/src/assets/img/total.png") no-repeat ; */
 }
 
 .add {

@@ -3,7 +3,7 @@
     <el-container>
       <!-- 左侧 Aside -->
       <el-aside width="300px" class="full-height-aside">
-        <img src="../../images/img/left.jpg" alt="Left Image Description" class="full-height-image">
+        <img src="/user/images/img/left.jpg" alt="Left Image Description" class="full-height-image">
       </el-aside>
 
       <!-- 中间部分 -->
@@ -53,7 +53,7 @@
 
       <!-- 右侧 Aside -->
       <el-aside width="300px" class="full-height-aside">
-        <img src="../../images/img/right.jpg" alt="Left Image Description" class="full-height-image">
+        <img src="/user/images/img/right.jpg" alt="Left Image Description" class="full-height-image">
       </el-aside>
     </el-container>
 </template>
@@ -225,7 +225,7 @@ button:hover {
 }
 .header {
   position: relative;
-  background-image: url("../../images/img/header.jpg");
+  background-image: url("/user/images/img/header.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

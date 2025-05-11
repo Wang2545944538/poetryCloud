@@ -67,7 +67,7 @@ const handleSearch = () => {
   <Headler />
   <div
       class="external"
-      style="background-image: url('src/images/img/8278cfb64ef52c5ac6938f5d735268c443073da888ee04-M0W8m6.jpeg');"
+      style="background-image: url('/user/images/img/8278cfb64ef52c5ac6938f5d735268c443073da888ee04-M0W8m6.jpeg');"
   >
 
     <div class="search-container">

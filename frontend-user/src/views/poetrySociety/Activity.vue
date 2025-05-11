@@ -45,7 +45,7 @@ const toActivityView=()=>{
   // routes.push({path:"/answer"})
 }
 const img =(url) =>{
-  return `src/images/jieImg/${url}`
+  return `/user/images/jieImg/${url}`
 }
 
 function getPublicImageUrl(imageName) {
@@ -58,7 +58,7 @@ function getPublicImageUrl(imageName) {
 .activity {
   display: flex;
   flex-direction: column;
-  //align-items: center;
+  /* //align-items: center; */
   margin-bottom: 20px;
   align-items: flex-start;
 

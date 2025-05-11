@@ -209,7 +209,7 @@ body {
 }
 
 .background_img {
-  background-image: url(../../images/img/login.png);
+  background-image: url(/user/images/img/login.png);
   position: absolute;
   top: 0;
   left: 0;

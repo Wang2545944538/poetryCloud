@@ -2,21 +2,21 @@
   <headler />
   <div class="image-container">
     <div class="title">
-      <img src="../../images/icon/诗词诵读.png" alt="">
+      <img src="/user/images/icon/诗词诵读.png" alt="">
       <p>云墨诗苑</p>
     </div>
     <div class="search-box">
       <div class="search-input-container">
         <input type="text" v-model="searchQuery" class="search-input" placeholder="输入搜索诗人...">
-        <button class="search-btn" @click="submitSearch"><img src="../../images/icon/搜索-01.png" alt=""></button>
+        <button class="search-btn" @click="submitSearch"><img src="/user/images/icon/搜索-01.png" alt=""></button>
       </div>
     </div>
     <div class="image-stack">
 
-      <div class="image" style="background-image: url('../../src/images/img/xihushijingtujuan-1.jpg');"></div>
-      <div class="image" style="background-image: url('../../src/images/img/xihushijingtujuan-2.jpg');"></div>
-      <div class="image" style="background-image: url('../../src/images/img/xihushijingtujuan-3.jpg');"></div>
-      <div class="image" style="background-image: url('../../src/images/img/xihushijingtujuan-4.jpg');"></div>
+      <div class="image" style="background-image: url('/user/images/img/xihushijingtujuan-1.jpg');"></div>
+      <div class="image" style="background-image: url('/user/images/img/xihushijingtujuan-2.jpg');"></div>
+      <div class="image" style="background-image: url('/user/images/img/xihushijingtujuan-3.jpg');"></div>
+      <div class="image" style="background-image: url('/user/images/img/xihushijingtujuan-4.jpg');"></div>
     </div>
   </div>
   <!-- 下方可以继续放置其他模块 -->

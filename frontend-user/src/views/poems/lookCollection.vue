@@ -75,7 +75,7 @@ const changePage=(page)=>{
 
   <div
       class="external"
-      style="background-image: url('src/images/img/poems_1.png')">
+      style="background-image: url('/user/images/img/poems_1.png')">
 <div>
 
     <h1 style="text-align: center;">

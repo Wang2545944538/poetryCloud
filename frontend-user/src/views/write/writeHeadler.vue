@@ -1,6 +1,6 @@
 <script setup>
 
-import writeImage from '@/images/write/images.webp';
+import writeImage from '/user/images/write/images.webp';
 import router from "@/routes/index.js";
 import {Plus} from "@element-plus/icons-vue"; // 使用别名@指向src目录
 
