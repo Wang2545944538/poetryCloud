@@ -22,12 +22,14 @@ jobs:
       # 构建 frontend-user
       # ------------------------
       - name: Install dependencies (frontend-user)
-        working-directory: ${{ github.workspace }}/frontend-user
-        run: npm install --registry=https://registry.npmmirror.com
+        run: |
+          cd frontend-user
+          npm install --registry=https://registry.npmmirror.com
 
       - name: Build project (frontend-user)
-        working-directory: ${{ github.workspace }}/frontend-user
-        run: npm run build
+        run: |
+          cd frontend-user
+          npm run build
 
       - name: Upload frontend-user to server
         uses: appleboy/scp-action@v0.1.6
@@ -36,19 +38,21 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           password: ${{ secrets.SERVER_PASSWORD }}
           port: 22
-          source: "${{ github.workspace }}/frontend-user/dist/*"
+          source: "frontend-user/dist/*"
           target: "/usr/share/nginx/html/user"
 
       # ------------------------
       # 构建 frontend-admin
       # ------------------------
       - name: Install dependencies (frontend-admin)
-        working-directory: ${{ github.workspace }}/frontend-admin
-        run: npm install --registry=https://registry.npmmirror.com
+        run: |
+          cd frontend-admin
+          npm install --registry=https://registry.npmmirror.com
 
       - name: Build project (frontend-admin)
-        working-directory: ${{ github.workspace }}/frontend-admin
-        run: npm run build
+        run: |
+          cd frontend-admin
+          npm run build
 
       - name: Upload frontend-admin to server
         uses: appleboy/scp-action@v0.1.6
@@ -57,5 +61,5 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           password: ${{ secrets.SERVER_PASSWORD }}
           port: 22
-          source: "${{ github.workspace }}/frontend-admin/dist/*"
+          source: "frontend-admin/dist/*"
           target: "/usr/share/nginx/html/admin"
