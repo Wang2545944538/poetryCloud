@@ -22,11 +22,11 @@ jobs:
       # 构建 frontend-user
       # ------------------------
       - name: Install dependencies (frontend-user)
-        working-directory: ./frontend-user
+        working-directory: ${{ github.workspace }}/frontend-user
         run: npm install --registry=https://registry.npmmirror.com
 
       - name: Build project (frontend-user)
-        working-directory: ./frontend-user
+        working-directory: ${{ github.workspace }}/frontend-user
         run: npm run build
 
       - name: Upload frontend-user to server
@@ -36,18 +36,18 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           password: ${{ secrets.SERVER_PASSWORD }}
           port: 22
-          source: "./frontend-user/dist/*"
+          source: "${{ github.workspace }}/frontend-user/dist/*"
           target: "/usr/share/nginx/html/user"
 
       # ------------------------
       # 构建 frontend-admin
       # ------------------------
       - name: Install dependencies (frontend-admin)
-        working-directory: ./frontend-admin
+        working-directory: ${{ github.workspace }}/frontend-admin
         run: npm install --registry=https://registry.npmmirror.com
 
       - name: Build project (frontend-admin)
-        working-directory: ./frontend-admin
+        working-directory: ${{ github.workspace }}/frontend-admin
         run: npm run build
 
       - name: Upload frontend-admin to server
@@ -57,5 +57,5 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           password: ${{ secrets.SERVER_PASSWORD }}
           port: 22
-          source: "./frontend-admin/dist/*"
+          source: "${{ github.workspace }}/frontend-admin/dist/*"
           target: "/usr/share/nginx/html/admin"
