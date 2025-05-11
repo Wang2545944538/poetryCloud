@@ -6,7 +6,7 @@
                     <div class="title">诗会</div>
                     <div class="content">穿越千年，诗意对决</div>
                 </div>
-                <img src="/user/images/icon/诗歌-copy.png"/>
+                <img src="/images/icon/诗歌-copy.png"/>
             </div>
         </router-link>
         <router-link class="mbox" to="/poet">
@@ -15,7 +15,7 @@
                     <div class="title">作者</div>
                     <div class="content">探寻诗人足迹</div>
                 </div>
-                <img src="/user/images/icon/main2.png"/>
+                <img src="/images/icon/main2.png"/>
             </div>
         </router-link>
         <router-link class="mbox" to="/opus">
@@ -24,7 +24,7 @@
                     <div class="title">作品</div>
                     <div class="content">诗海拾遗珠</div>
                 </div>
-                <img src="/user/images/icon/main3.png"/>
+                <img src="/images/icon/main3.png"/>
             </div>
         </router-link>
         <router-link class="mbox" to="/write">
@@ -33,7 +33,7 @@
                     <div class="title">创作</div>
                     <div class="content">名句藏芳华</div>
                 </div>
-                <img src="/user/images/icon/诗词.png"/>
+                <img src="/images/icon/诗词.png"/>
             </div>
         </router-link>
         <router-link class="mbox" to="/poems">
@@ -42,7 +42,7 @@
                     <div class="title">诗集</div>
                     <div class="content">品诗韵之魂</div>
                 </div>
-                <img src="/user/images/icon/main5.png"/>
+                <img src="/images/icon/main5.png"/>
             </div>
         </router-link>
     </div>

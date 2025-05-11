@@ -6,7 +6,7 @@
       <div class="left_box">
         <p class="left_box_title1">打开云墨诗苑App</p>
         <p>在「个人主页」右上角打开扫一扫</p>
-        <div class="left_box_img"><img src="/user/images/img/2021557FD3F170EBECB34AFD3CA8D65C.jpg" alt=""></div>
+        <div class="left_box_img"><img src="/images/img/2021557FD3F170EBECB34AFD3CA8D65C.jpg" alt=""></div>
         <p>其他扫码方式：微信</p>
         <div>
           <el-button>下载云墨诗苑App</el-button>
@@ -29,9 +29,9 @@
         </el-form>
         <p>其他方式登录 <router-link to="/register" class="login-link">注册</router-link></p>
         <div class="right_box_smallbox">
-          <p><img src="/user/images/icon/微信.png" alt=""></p>
-          <p><img src="/user/images/icon/qq.png" alt=""></p>
-          <p><img src="/user/images/icon/微博.png" alt=""></p>
+          <p><img src="/images/icon/微信.png" alt=""></p>
+          <p><img src="/images/icon/qq.png" alt=""></p>
+          <p><img src="/images/icon/微博.png" alt=""></p>
         </div>
       </div>
     </div>

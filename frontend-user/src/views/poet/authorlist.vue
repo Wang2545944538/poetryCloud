@@ -1,7 +1,7 @@
 <template>
     <headler />
     <router-link to="/poet" class="back">
-        <img src="/user/images/icon/back.webp" style="width: 35px;" alt="">
+        <img src="/images/icon/back.webp" style="width: 35px;" alt="">
         <p class="back_text" style="">返回</p>
     </router-link>
 

@@ -345,11 +345,11 @@ body {
   text-decoration: none;
   color: #409eff;
   display: block;
-  margin-left: 10%;
+  margin-left: 10%
 }
-.message {
+/* .message {
 
-}
+} */
 .input-with-message {
   display: flex;
   flex-direction: column; /* 默认为垂直方向 */

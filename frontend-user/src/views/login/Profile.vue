@@ -148,7 +148,7 @@ const toAvatar=()=>{
 
 <style scoped>
 .bg {
-  background: url('/user/images/img/1.jpeg') 50% no-repeat;
+  background: url('/images/img/1.jpeg') 50% no-repeat;
   height: 380px;
   display: flex;
   flex-direction: column;

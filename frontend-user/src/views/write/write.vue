@@ -1,7 +1,7 @@
 <script setup>
 import headler from "../../views/headler.vue";
 import writeHeadler from "../../views/write/writeHeadler.vue";
-import writeImage from '/user/images/write/images.webp'; // 使用别名@指向src目录
+import writeImage from '/images/write/images.webp'; // 使用别名@指向src目录
 import writeFooter from "../../views/write/writeFooter.vue";
 import writeBody from "../../views/write/writeBody.vue";
 

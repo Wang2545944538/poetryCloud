@@ -6,7 +6,7 @@
             <h1>{{ author.author_name }}</h1>
         </el-header>
         <div class="back" @click="goBack">
-            <img src="/user/images/icon/back.webp" style="width: 35px;" alt="">
+            <img src="/images/icon/back.webp" style="width: 35px;" alt="">
             <p class="back_text" style="">返回</p>
         </div>
         <el-main>

@@ -3,7 +3,7 @@
   <el-container>
     <!-- 左侧 Aside -->
     <el-aside width="300px" class="full-height-aside">
-      <img src="/user/images/img/left.jpg" alt="Left Image Description" class="full-height-image">
+      <img src="/images/img/left.jpg" alt="Left Image Description" class="full-height-image">
     </el-aside>
 
     <!-- 中间部分 -->
@@ -45,7 +45,7 @@
 
     <!-- 右侧 Aside -->
     <el-aside width="300px" class="full-height-aside">
-      <img src="/user/images/img/right.jpg" alt="Left Image Description" class="full-height-image">
+      <img src="/images/img/right.jpg" alt="Left Image Description" class="full-height-image">
     </el-aside>
   </el-container>
 

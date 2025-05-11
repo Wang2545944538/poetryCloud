@@ -90,7 +90,7 @@
             <div class="title">
               <span>{{ poem.title }}</span>
               <el-button icon="el-icon-star-off" circle class="favorite-btn" @click="openCollectionModal(poem.poem_id,poem.title)" @click.stop>
-                <img src="/user/images/img/sc1.png" alt="收藏">
+                <img src="/images/img/sc1.png" alt="收藏">
               </el-button>
             </div>
           </template>
