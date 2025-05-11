@@ -37,7 +37,7 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           port: 22
           source: "${{ github.workspace }}/frontend-user/dist/*"
-          target: "/usr/share/nginx/html/user"
+          target: "/var/www/html/user"  # 修改目标路径为 /var/www/html/user
 
       # ------------------------
       # 构建 frontend-admin
@@ -58,4 +58,4 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           port: 22
           source: "${{ github.workspace }}/frontend-admin/dist/*"
-          target: "/usr/share/nginx/html/admin"
+          target: "/var/www/html/admin"  # 修改目标路径为 /var/www/html/admin
