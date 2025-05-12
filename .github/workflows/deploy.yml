@@ -39,29 +39,37 @@ jobs:
           target: "/var/www/backend"  # 上传到服务器上的目标路径
 
       # 执行启动后端服务
-      - name: Run backend service
+      - name: Run backend service inside Docker container
         uses: appleboy/ssh-action@v0.1.5
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}  # 使用 GitHub Secrets 中的私钥
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            # 查找占用 5180 端口的进程，并杀掉它（如果存在）
-            PID=$(lsof -t -i:5180)
-            if [ -n "$PID" ]; then
-              echo "Killing process on port 5180 (PID: $PID)"
-              kill -9 $PID
+            # 定义变量
+            CONTAINER_NAME=myjenkins2
+            LOCAL_JAR_PATH=/var/www/backend/github/workspace/backend/target/back-0.0.1-SNAPSHOT.jar
+            CONTAINER_TARGET_DIR=/home/jenkins/workspace/ThePoetryCloud/backend/target
+            CONTAINER_JAR_PATH=$CONTAINER_TARGET_DIR/back-0.0.1-SNAPSHOT.jar
+
+            # 将 JAR 拷贝进容器指定路径
+            echo "Copying JAR into Docker container..."
+            docker cp $LOCAL_JAR_PATH $CONTAINER_NAME:$CONTAINER_JAR_PATH
+
+            # 在容器中查找占用 5180 端口的进程并杀掉
+            echo "Checking port 5180 inside Docker..."
+            PID=$(docker exec $CONTAINER_NAME bash -c "lsof -t -i:5180")
+            if [ -n \"$PID\" ]; then
+              echo "Killing process on port 5180 in container (PID: $PID)"
+              docker exec $CONTAINER_NAME bash -c "kill -9 $PID"
             fi
-            
-            # 移动 JAR 文件到当前目录
-            mv /var/www/backend/github/workspace/backend/target/back-0.0.1-SNAPSHOT.jar /var/www/backend/
-            
-            # 切换到后端目录
-            cd /var/www/backend
-            # 启动后端服务
-            nohup java -jar back-0.0.1-SNAPSHOT.jar --server.port=5180 --server.address=0.0.0.0 > /var/log/backend.log 2>&1 &
-            echo "Backend service started."
+
+            # 启动服务
+            echo "Starting backend service inside Docker..."
+            docker exec -d $CONTAINER_NAME bash -c "nohup java -jar $CONTAINER_JAR_PATH --server.port=5180 --server.address=0.0.0.0 > /home/jenkins/backend.log 2>&1 &"
+
+            echo "Backend service started in Docker container."
 
   # 前端构建与部署
   frontend:
