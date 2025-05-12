@@ -50,7 +50,7 @@ jobs:
             # 定义变量
             CONTAINER_NAME=myjenkins2
             LOCAL_JAR_PATH=/var/www/backend/github/workspace/backend/target/back-0.0.1-SNAPSHOT.jar
-            CONTAINER_TARGET_DIR=/home/jenkins/workspace/ThePoetryCloud/backend/target
+            CONTAINER_TARGET_DIR=/var/jenkins_home/workspace/ThePoetryCloud/backend/target
             CONTAINER_JAR_PATH=$CONTAINER_TARGET_DIR/back-0.0.1-SNAPSHOT.jar
 
             # 将 JAR 拷贝进容器指定路径
@@ -67,9 +67,10 @@ jobs:
 
             # 启动服务
             echo "Starting backend service inside Docker..."
-            docker exec -d $CONTAINER_NAME bash -c "nohup java -jar $CONTAINER_JAR_PATH --server.port=5180 --server.address=0.0.0.0 > /home/jenkins/backend.log 2>&1 &"
+            docker exec -d $CONTAINER_NAME bash -c "nohup java -jar $CONTAINER_JAR_PATH --server.port=5180 --server.address=0.0.0.0 > /var/jenkins_home/backend.log 2>&1 &"
 
             echo "Backend service started in Docker container."
+
 
   # 前端构建与部署
   frontend:
