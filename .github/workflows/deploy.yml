@@ -47,6 +47,9 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}  # 使用 GitHub Secrets 中的私钥
           port: 22
           script: |
+            # 移动 JAR 文件到当前目录
+            mv /var/www/backend/github/workspace/backend/target/back-0.0.1-SNAPSHOT.jar /var/www/backend/
+            
             # 切换到后端目录
             cd /var/www/backend
             # 启动后端服务
