@@ -24,7 +24,7 @@ jobs:
 
       # 安装Maven
       - name: Set up Maven
-        uses: actions/setup-java@v3
+        uses: actions/setup-maven@v2
         with:
           java-version: '8'
           maven-version: '3.8.8'
