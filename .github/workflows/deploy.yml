@@ -21,13 +21,7 @@ jobs:
         with:
           java-version: '8'
           distribution: 'temurin'
-
-      # 安装Maven
-      - name: Set up Maven
-        uses: actions/setup-maven@v3
-        with:
-          maven-version: '3.8.8'
-
+          
       # 构建后端项目
       - name: Build backend project
         working-directory: ${{ github.workspace }}/backend
