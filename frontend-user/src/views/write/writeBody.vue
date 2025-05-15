@@ -52,7 +52,7 @@ onMounted(()=>{
       <div class="container">
         <div class="box" v-for="item in data.tableData" :key="item.id">
           <div class="img-box">
-            <img :src="`https://yunmo1.oss-cn-fuzhou.aliyuncs.com/avatar/${item.avatar}`" alt="">
+            <img :src="`/user/images/img/a5ab98ee28ccad512d8cc48f7e2e69a6644bd0364d391-uIae8t.png`" alt="">
           </div>
           <div class="text-box">
             <div>
@@ -190,8 +190,8 @@ body{
 .container .box .text-box h2{
   font-size: 20px;
   margin-bottom: 10px;
-  /* 默认移出可视范围 */
-  transform: translateY(200px);
+  transform: none;     /* 不再默认移出视图 */
+  opacity: 1;          /* 默认完全显示 */
   transition: 0.5s;
 }
 .container .box:hover .text-box h2{
@@ -204,7 +204,8 @@ body{
   font-size: 20px;
   margin-bottom: 10px;
   /* 默认移出可视范围 */
-  transform: translateY(200px);
+  transform: none;     /* 不再默认移出视图 */
+  opacity: 1;          /* 默认完全显示 */
   transition: 0.5s;
 }
 .container .box:hover .text-box h4{
@@ -216,9 +217,9 @@ body{
 .container .box .text-box p{
   font-size: 13px;
   line-height: 20px;
-  /* 默认移出可视范围 */
-  transform: translateY(200px);
   transition: 0.5s;
+  transform: none;     /* 不再默认移出视图 */
+  opacity: 1;          /* 默认完全显示 */
 }
 .container .box:hover .text-box p{
   /* 鼠标移入，移入可视范围 */

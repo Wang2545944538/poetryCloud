@@ -13,6 +13,7 @@
     <el-menu-item index="4">作品</el-menu-item>
     <el-menu-item index="5">创作</el-menu-item>
     <el-menu-item index="6">诗集</el-menu-item>
+    <el-menu-item index="7">AI创作</el-menu-item>
 
     <template v-if="token">
       <el-dropdown trigger="click">
@@ -80,6 +81,7 @@ watch(() => route.path, (newPath) => {
     '/opus': '4',
     '/write': '5',
     '/poems': '6',
+    '/aiTest': '7',
     // 添加其他路由与索引的映射
 
   };
@@ -102,7 +104,7 @@ watch(() => route.path, (newPath) => {
 const logout = () => {
   localRemove("token");
   localRemove("avatar");
-  window.location.href = '/'
+  window.location.href = '/user/'
 };
 
 // 跳转到登录页面
@@ -125,7 +127,7 @@ const handleSelect = (key: string) => {
     '4': '/opus',
     '5': '/write',
     '6': '/poems',
-    '7': '/souk',
+    '7': '/aiTest',
 
     // 添加其他索引与路由的映射
 

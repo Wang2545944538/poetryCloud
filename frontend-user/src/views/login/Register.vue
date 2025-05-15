@@ -7,29 +7,28 @@
       <el-form :model="registerForm" :rules="registerRules" ref="registerFormRef" class="register-form">
         <h3>新用户注册</h3>
         <el-form-item  prop="nickname">
-          <el-input v-model="registerForm.nickname" placeholder="请输入昵称"></el-input>
-        </el-form-item>
+          <el-input v-model="registerForm.nickname" placeholder="请输入昵称" @input="() => registerForm.nickname = registerForm.nickname.replace(/\s/g, '')"></el-input>        </el-form-item>
         <el-form-item prop="username">
           <div class="input-with-message">
             <el-input
                 v-model="registerForm.username"
                 placeholder="请输入账号"
-                @input="checkUsername"
+                @input="() => { registerForm.username = registerForm.username.replace(/\s/g, ''); checkUsername(); }"
             ></el-input>
-            {{ message }}
+            <span :style="{ color: message === '用户名可用' ? 'green' : 'red' }">{{ message }}</span>
           </div>
 
         </el-form-item>
         <el-form-item  prop="password">
-          <el-input v-model="registerForm.password" type="password" placeholder="请输入密码"></el-input>
+          <el-input v-model="registerForm.password" type="password" placeholder="请输入密码" @input="() => registerForm.password = registerForm.password.replace(/\s/g, '')"></el-input>
         </el-form-item>
         <el-form-item  prop="confirmPassword" >
-          <el-input v-model="registerForm.confirmPassword" type="password" placeholder="请再次输入密码"></el-input>
+          <el-input v-model="registerForm.confirmPassword" type="password" placeholder="请再次输入密码" @input="() => registerForm.confirmPassword = registerForm.confirmPassword.replace(/\s/g, '')"></el-input>
         </el-form-item>
         <el-form-item  prop="phone">
           <div class="input-with-message">
-          <el-input v-model="registerForm.phoneNumber" placeholder="请输入手机号" @input="checkPhoneNumber"></el-input>
-          {{ message1 }}
+            <el-input v-model="registerForm.phoneNumber" placeholder="请输入手机号" @input="() => { registerForm.phoneNumber = registerForm.phoneNumber.replace(/\s/g, ''); checkPhoneNumber(); }"></el-input>
+            <span :style="{ color: message1 === '电话号码可用' ? 'green' : 'red' }">{{ message1}}</span>
           </div>
         </el-form-item>
         <el-form-item class="action-buttons">
@@ -96,6 +95,8 @@ const registerRules = {
 const registerFormRef = ref(null)
 // 用户名是否已存在
 const isUsernameTaken = ref(false);
+// 手机号是否存在
+const isPhoneNumberTaken = ref(false);
 //验证用户
 async function checkUsername(){
   try {
@@ -114,20 +115,20 @@ async function checkUsername(){
           isUsernameTaken.value = false;
         } else {
           message.value = messageData || '未知错误';
-          isUsernameTaken.value = false;
+          isUsernameTaken.value = true;
         }
       } else {
         message.value = '用户名不符合规则';
-        isUsernameTaken.value = false;
+        isUsernameTaken.value = true;
       }
     } else {
       message.value = '';
-      isUsernameTaken.value = false;
+      isUsernameTaken.value = true;
     }
   } catch (error) {
     console.error('Error checking username:', error);
     message.value = '检查用户名失败，请稍后再试。';
-    isUsernameTaken.value = false;
+    isUsernameTaken.value = true;
   }
 }
 //验证电话号码
@@ -142,26 +143,26 @@ async function checkPhoneNumber(){
         const messageData = response.data;
         if (messageData === '该电话号码已被注册') {
           message1.value = messageData;
-          isUsernameTaken.value = true;
+          isPhoneNumberTaken.value = true;
         } else if (messageData === '电话号码不存在') {
           message1.value = '电话号码可用';
-          isUsernameTaken.value = false;
+          isPhoneNumberTaken.value = false;
         } else {
           message1.value = messageData || '未知错误';
-          isUsernameTaken.value = false;
+          isPhoneNumberTaken.value = true;
         }
       } else {
         message1.value = '电话号码不符合规则';
-        isUsernameTaken.value = false;
+        isPhoneNumberTaken.value = true;
       }
     } else {
       message1.value = '';
-      isUsernameTaken.value = false;
+      isPhoneNumberTaken.value = true;
     }
   } catch (error) {
     console.error('Error checking phone:', error);
     message1.value = '检查电话号码失败，请稍后再试。';
-    isUsernameTaken.value = false;
+    isPhoneNumberTaken.value = true;
   }
 }
 // 验证用户名是否符合规则
@@ -173,29 +174,50 @@ function validatePhoneNumber(phoneNumber) {
   const usernameRegex = /^1[3-9]\d{9}$/;
   return usernameRegex.test(phoneNumber);
 }
-const submitRegister=()=>{
-  if (isUsernameTaken.value) {
-    ElMessage.error('该用户名或电话号码已被注册，请尝试其他用户名');
-    isUsernameTaken.value=false;
-    return;
-  }
-  registerForm.password = md5(registerForm.password)
-  axios.post("/users/register",registerForm).then(res=>{
-    if (res.code === 200){
-      ElMessage({
-        message:"注册成功",
-        type:"success",
-      })
-      window.location.href = '/login'
-    }else {
-      ElMessage({
-        message:"注册失败",
-        type:"error",
-      })
-      location.reload()
+
+const submitRegister = async () => {
+  registerFormRef.value.validate(async (valid) => {
+    const nicknameSafe = /^[^<>\"']{2,20}$/;
+    if (!nicknameSafe.test(registerForm.nickname)) {
+      ElMessage.error('昵称不能包含特殊字符');
+      return;
     }
-  })
-}
+    if (!valid) {
+      ElMessage.error('请填写所有合法信息后再提交');
+      return;
+    }
+
+    // 检查用户名/手机号可用性（异步）
+    await checkUsername();
+    await checkPhoneNumber();
+
+    if (isUsernameTaken.value) {
+      ElMessage.error('该用户名不符合，请更换');
+      return;
+    }
+    if (isPhoneNumberTaken.value) {
+      ElMessage.error('该手机号不符合，请更换');
+      return;
+    }
+
+    // 加密密码并提交
+    const payload = {
+      ...registerForm,
+      password: md5(registerForm.password),
+    };
+
+    axios.post("/users/register", payload).then(res => {
+      if (res.code === 200) {
+        ElMessage.success("注册成功");
+        window.location.href = '/login';
+      } else {
+        ElMessage.error("注册失败");
+      }
+    }).catch(() => {
+      ElMessage.error("请求失败");
+    });
+  });
+};
 
 </script>
 
@@ -209,7 +231,7 @@ body {
 }
 
 .background_img {
-  background-image: url(/user/images/img/login.png);
+  background-image: url(../../images/img/login.png);
   position: absolute;
   top: 0;
   left: 0;
@@ -319,10 +341,7 @@ body {
   width: 80%;
   height: 80%;
 }
-.login-form {
-  width: 60%;
-  margin: 0 auto;
-}
+
 .action-buttons {
   display: flex;
   flex-direction: column;
@@ -345,20 +364,13 @@ body {
   text-decoration: none;
   color: #409eff;
   display: block;
-  margin-left: 10%
+  margin-left: 10%;
 }
-/* .message {
 
-} */
 .input-with-message {
   display: flex;
   flex-direction: column; /* 默认为垂直方向 */
   color: #ff4d4f; /* 提示信息颜色 */
   font-size: 0.8em; /* 字体大小 */
 }
-
-
-
-
-
 </style>

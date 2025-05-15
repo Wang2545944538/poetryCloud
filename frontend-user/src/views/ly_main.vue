@@ -45,6 +45,15 @@
                 <img src="/images/icon/main5.png"/>
             </div>
         </router-link>
+        <router-link class="mbox" to="/aiTest">
+            <div class="minbox">
+                <div class="text">
+                    <div class="title">AI创作</div>
+                    <div class="content">与时代共舞</div>
+                </div>
+                <img src="/images/icon/ai.png"/>
+            </div>
+        </router-link>
     </div>
 
 </template>

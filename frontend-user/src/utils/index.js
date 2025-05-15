@@ -38,7 +38,6 @@ export const pathMap = {
   write:'创作',
   poetrySociety:'诗会',
   poems:'诗集',
-  souk:'市集',
   authorDetail:'诗人详情',
   activityView:'活动详细',
   addWrite:'我要创作',
@@ -48,5 +47,6 @@ export const pathMap = {
   results:'结果',
   brailleIntoPoetry:'点词成诗',
   mineLike:'我喜欢',
-  mineSheet:'我的收藏'
+  mineSheet:'我的收藏',
+  aiTest:'AI创作',
 }

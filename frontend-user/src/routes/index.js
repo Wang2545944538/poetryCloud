@@ -171,6 +171,11 @@ const router = createRouter({
             name: 'myWriteFooter',
             component: () => import('../views/write/myWriteFooter.vue')
         },
+        {
+            path: '/aiTest',
+            name: 'aiTest',
+            component: () => import('../views/aiTest.vue')
+        },
     ]
 })
 
