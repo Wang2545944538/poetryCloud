@@ -37,9 +37,11 @@ public class AuthorController {
     IAuthorService authorService;
     @Autowired
     IPoemService poemService;
-    @RequestMapping("authorList")
-    ResponseMsg authors(){
-        return new ResponseMsg(200,authorService.list());
+    @RequestMapping("/authorList")
+    public ResponseMsg authors() {
+        List<Author> allAuthors = authorService.list();
+        List<Author> first19 = allAuthors.size() > 19 ? allAuthors.subList(0, 19) : allAuthors;
+        return new ResponseMsg(200, first19);
     }
 
     //根据id查找作者
