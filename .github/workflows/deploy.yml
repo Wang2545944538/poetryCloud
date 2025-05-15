@@ -1,4 +1,4 @@
-name: Frontend Deploy to Server
+name: Build and Deploy Backend and Frontend
 
 on:
   push:
@@ -6,21 +6,87 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  # 后端构建与部署
+  backend:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout代码
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 设置 JDK
+      - name: Set up JDK 8
+        uses: actions/setup-java@v3
+        with:
+          java-version: '8'
+          distribution: 'temurin'
+          
+      # 构建后端项目
+      - name: Build backend project
+        working-directory: ${{ github.workspace }}/backend
+        run: mvn clean package
+
+      # 上传后端JAR到服务器
+      - name: Upload backend JAR to server
+        uses: appleboy/scp-action@v0.1.6
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}  # 使用 GitHub Secrets 中的私钥
+          port: 22
+          source: "${{ github.workspace }}/backend/target/back-0.0.1-SNAPSHOT.jar"
+          target: "/var/www/backend"  # 上传到服务器上的目标路径
+
+      # 执行启动后端服务
+      - name: Run backend service inside Docker container
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            # 定义变量
+            CONTAINER_NAME=myjenkins2
+            LOCAL_JAR_PATH=/var/www/backend/github/workspace/backend/target/back-0.0.1-SNAPSHOT.jar
+            CONTAINER_TARGET_DIR=/var/jenkins_home/workspace/ThePoetryCloud/backend/target
+            CONTAINER_JAR_PATH=$CONTAINER_TARGET_DIR/back-0.0.1-SNAPSHOT.jar
+
+            # 将 JAR 拷贝进容器指定路径
+            echo "Copying JAR into Docker container..."
+            docker cp $LOCAL_JAR_PATH $CONTAINER_NAME:$CONTAINER_JAR_PATH
+
+            # 在容器中查找占用 5180 端口的进程并杀掉
+            echo "Checking port 5180 inside Docker..."
+            PID=$(docker exec $CONTAINER_NAME bash -c "lsof -t -i:5180")
+            if [ -n \"$PID\" ]; then
+              echo "Killing process on port 5180 in container (PID: $PID)"
+              docker exec $CONTAINER_NAME bash -c "kill -9 $PID"
+            fi
+
+            # 启动服务
+            echo "Starting backend service inside Docker..."
+            docker exec -d $CONTAINER_NAME bash -c "nohup java -jar $CONTAINER_JAR_PATH --server.port=5180 --server.address=0.0.0.0 > /var/jenkins_home/backend.log 2>&1 &"
+
+            echo "Backend service started in Docker container."
+
+
+  # 前端构建与部署
+  frontend:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # 设置 Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: '18'
 
-      # ------------------------
       # 构建 frontend-user
-      # ------------------------
       - name: Install dependencies (frontend-user)
         working-directory: ${{ github.workspace }}/frontend-user
         run: npm install --registry=https://registry.npmmirror.com
@@ -34,14 +100,12 @@ jobs:
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}  # 使用 GitHub Secrets 中的私钥
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           source: "${{ github.workspace }}/frontend-user/dist/*"
-          target: "/var/www/html/user"  # 上传到目标路径
+          target: "/var/www/html/user"
 
-      # ------------------------
       # 构建 frontend-admin
-      # ------------------------
       - name: Install dependencies (frontend-admin)
         working-directory: ${{ github.workspace }}/frontend-admin
         run: npm install --registry=https://registry.npmmirror.com
@@ -55,20 +119,18 @@ jobs:
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}  # 使用 GitHub Secrets 中的私钥
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           source: "${{ github.workspace }}/frontend-admin/dist/*"
-          target: "/var/www/html/admin"  # 上传到目标路径
+          target: "/var/www/html/admin"
 
-      # ------------------------
       # 执行命令复制文件并统一重载 Nginx
-      # ------------------------
       - name: Copy frontend-user and frontend-admin files, then restart Nginx
         uses: appleboy/ssh-action@v0.1.5
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}  # 使用 GitHub Secrets 中的私钥
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
             # 复制 frontend-user 文件到最终目录
