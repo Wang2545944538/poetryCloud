@@ -3,10 +3,34 @@ import { ElMessage } from 'element-plus'
 import router from '@/routes/index'
 import { localGet } from './index'
 
-
-
-
+// 创建实例
+const service = axios.create({
+  baseURL: 'http://127.0.0.1:5180/', // 统一接口前缀
+  withCredentials: true,
+  headers: {
+    'X-Requested-With': 'XMLHttpRequest',
+    'Content-Type': 'application/json'
   }
+})
+
+// 请求拦截器
+service.interceptors.request.use(
+  config => {
+    // 每次请求都动态从 localStorage 获取最新 token
+    const token = localGet('token')
+    if (token) {
+      config.headers['token'] = token
+    }
+
+    // 如果后端部署为 a.war 形式，可以开启以下路径前缀（视项目需求）
+    // config.url = 'a' + config.url
+
+    return config
+  },
+  error => {
+    return Promise.reject(error)
+  }
+)
 
 // 响应拦截器
 service.interceptors.response.use(
