@@ -2,10 +2,10 @@ package com.yunmo.back.controller;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.yunmo.back.common.ResponseMsg;
 import com.yunmo.back.pojo.Users;
 import com.yunmo.back.service.ICommentService;
-import com.yunmo.util.JwtUtils;
-import com.yunmo.util.ResponseMsg;
+import com.yunmo.back.util.JwtUtils;
 import io.jsonwebtoken.Claims;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;

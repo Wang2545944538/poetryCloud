@@ -2,13 +2,13 @@ package com.yunmo.back.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.yunmo.back.common.ResponseMsg;
 import com.yunmo.back.pojo.Goods;
 import com.yunmo.back.pojo.Orders;
 import com.yunmo.back.pojo.Users;
 import com.yunmo.back.service.IGoodsService;
 import com.yunmo.back.service.IOrdersService;
 import com.yunmo.back.service.IUsersService;
-import com.yunmo.util.ResponseMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

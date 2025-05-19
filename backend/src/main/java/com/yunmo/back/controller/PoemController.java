@@ -5,13 +5,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yunmo.back.common.ResponseMsg;
 import com.yunmo.back.pojo.Poem;
 import com.yunmo.back.pojo.Users;
 import com.yunmo.back.service.IPoemService;
-import com.yunmo.back.utileClass.aPoem;
-import com.yunmo.back.utileClass.uPoem;
-import com.yunmo.util.JwtUtils;
-import com.yunmo.util.ResponseMsg;
+import com.yunmo.back.VO.aPoem;
+import com.yunmo.back.VO.uPoem;
+import com.yunmo.back.util.JwtUtils;
 import lombok.Data;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -264,12 +264,20 @@ public class PoemController {
             return poemService.getById(poem_id);
         }
 
-        // 管理员审核所有未审核的诗词
-        @RequestMapping("/adminCheckPoem")
-        public Object adminCheckPoem (
+        // 管理员查询所有未审核的自创诗
+        @RequestMapping("/getUncheckedPoems")
+        public Object getUncheckedPoems (
                 @RequestParam(value = "page", defaultValue = "1") int page,
-                @RequestParam(value = "limit", defaultValue = "10") int limit){
-            return poemService.adminCheckPoem(page, limit);
+                @RequestParam(value = "limit", defaultValue = "10") int limit) {
+            return poemService.getUncheckedPoems(page, limit);
+        }
+
+        // 管理员查询所有已审核的自创诗
+        @RequestMapping("/getCheckedPoems")
+        public Object getCheckedPoems (
+                @RequestParam(value = "page", defaultValue = "1") int page,
+                @RequestParam(value = "limit", defaultValue = "10") int limit) {
+            return poemService.getCheckedPoems(page, limit);
         }
 
         // 管理员审核通过，将poem表中的status字段由0改为1

@@ -32,7 +32,7 @@ const addW = () => {
         title.value = '';
         content.value = '';
         // 例如，您可以在这里添加逻辑来处理成功的响应，例如导航到另一个页面
-        window.location.href = '/write#/write'; // 直接跳转到指定页面
+        window.location.href = '/user/write#/write'; // 直接跳转到指定页面
       })
       .catch(error => {
         // 处理错误响应

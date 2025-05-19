@@ -5,10 +5,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunmo.back.pojo.Poem;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.yunmo.back.pojo.Poeminformation;
-import com.yunmo.back.utileClass.PoemDTO;
-import com.yunmo.back.utileClass.PoemMy;
+import com.yunmo.back.VO.PoemDTO;
+import com.yunmo.back.VO.PoemMy;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -70,9 +69,13 @@ public interface IPoemDao extends BaseMapper<Poem> {
 
     List<Poem> findByIdPoems(Integer author_id);
 
-    // 管理员审核所有自创诗
+    // 查询所有未审核的自创诗
     @Select("SELECT a.title, a.content, b.avatar ,b.nickname,a.status,a.poem_id FROM poem a LEFT JOIN users b ON a.author_id = b.user_id WHERE a.isself = 1 and a.status = 0")
-    IPage<PoemDTO> adminCheckPoem(IPage<PoemDTO> page);
+    IPage<PoemDTO> UncheckedPoems(IPage<PoemDTO> page);
+
+    // 查询所有已审核的自创诗
+    @Select("SELECT a.title, a.content, b.avatar ,b.nickname,a.status,a.poem_id FROM poem a LEFT JOIN users b ON a.author_id = b.user_id WHERE a.isself = 1 and a.status = 1 or a.status = 2 or a.status = 3")
+    IPage<PoemDTO> CheckedPoems(IPage<PoemDTO> page);
 
     // 管理员审核通过，将poem表中的status字段由0改为1
     @Select("update poem set status = 1 where poem_id = #{poem_id}")
@@ -83,7 +86,7 @@ public interface IPoemDao extends BaseMapper<Poem> {
     Integer adminCheckNotPass(@Param("poem_id") Integer poem_id);
 
     // 管理员查询所有自创诗
-    @Select("SELECT a.title, a.content, b.avatar ,b.nickname,a.status,a.poem_id FROM poem a LEFT JOIN users b ON a.author_id = b.user_id WHERE a.isself = 1 and a.status = 1 or a.status = 3")
+    @Select("SELECT a.title, a.content, b.avatar ,b.nickname,a.status,a.poem_id FROM poem a LEFT JOIN users b ON a.author_id = b.user_id WHERE a.isself = 1 and a.status = 1 or a.status = 2 or a.status = 3")
     IPage<PoemDTO> adminSelectAllPoem(IPage<PoemDTO> page);
 
     // 管理员上架诗词

@@ -7,7 +7,7 @@
   </el-carousel>
   <!-- 搜索容器 -->
   <div class="search-container">
-    <el-input v-model="input" type="text" :prefix-icon="Search" placeholder="搜索诗词" class="search-input"/>
+    <el-input v-model="input" type="text" :prefix-icon="Search" placeholder="搜索诗词" class="search-input" maxlength="200" show-word-limit/>
     <!-- 搜索按钮 -->
     <el-button type="primary" class="search-btn" @click="searchPoems">搜索</el-button>
   </div>
@@ -89,7 +89,7 @@
           <template #header>
             <div class="title">
               <span>{{ poem.title }}</span>
-              <el-button icon="el-icon-star-off" circle class="favorite-btn" @click="openCollectionModal(poem.poem_id,poem.title)" @click.stop>
+              <el-button v-if="isLogin" icon="el-icon-star-off" circle class="favorite-btn" @click="openCollectionModal(poem.poem_id,poem.title)" @click.stop>
                 <img src="/images/img/sc1.png" alt="收藏">
               </el-button>
             </div>
@@ -182,13 +182,22 @@ const changePage = (val) => {
   getPoems();
 }
 
+const isLogin = ref(false);
+
 onMounted(() => {
+  isLogin.value = localStorage.getItem("token") !== null;
+
+
   getAuthors();
   getDynasties();
   getGenres();
   getThemes();
   getPoems();
-  getCollectionByUserId()
+
+  // 只有登录后才获取用户的诗集列表
+  if (isLogin.value) {
+    getCollectionByUserId();
+  }
 })
 const getAuthors = () => {
   axios.get("/author/authorList")
@@ -236,7 +245,14 @@ const getPoems = () => {
 }
 
 const searchPoems = () => {
-  state.input=input.value;
+  const keyword = input.value.trim();
+  // 1. 字数限制：最多200个字符
+  if (keyword.length > 200) {
+    ElMessage.warning("搜索内容不能超过200个字符！");
+    return;
+  }
+
+  state.input=input.keyword;
   getPoems();
 }
 

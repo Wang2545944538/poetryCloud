@@ -8,6 +8,13 @@ import axios from "@/utils/axios.js";
 const route = useRoute();
 const router = useRouter();
 
+const isLoggedIn = ref(false);
+// 假设使用 localStorage 保存登录 token
+onMounted(() => {
+  isLoggedIn.value = !!localStorage.getItem("token"); // 或者是检查是否有 user 信息
+});
+
+
 const currentKey = ref('评析'); // 默认显示评析内容
 const comment = ref(''); // 绑定输入框的值
 
@@ -75,6 +82,10 @@ const submitComment = () => {
     alert('评论内容不能为空！');
     return;
   }
+  if(comment.value.length > 200){
+    alert('评论内容不能超过 200 字！');
+    return;
+  }
   const params = {
     poem_id:route.params.id,
     content:comment.value
@@ -112,9 +123,18 @@ const submitComment = () => {
     <!-- 评论区域 -->
     <div class="comments">
       <h3>评论</h3>
-      <div class="comment-form">
-        <textarea v-model="comment" placeholder="写下你的评论..."></textarea>
-        <el-button @click="submitComment" class="submit-comment">提交评论</el-button>
+
+      <!-- 未登录提示 -->
+      <div v-if="!isLoggedIn" class="not-logged-in">
+        <p>请先登录后再发表评论。</p>
+        <el-button @click="router.push('/login')">前往登录</el-button>
+      </div>
+      <!-- 已登录才显示评论框和评论列表 -->
+      <div v-else>
+        <div class="comment-form">
+          <textarea v-model="comment" placeholder="写下你的评论..." maxlength="200"></textarea>
+          <el-button @click="submitComment" class="submit-comment">提交评论</el-button>
+        </div>
       </div>
       <!-- 评论列表区域（假设后端返回评论数据） -->
       <div class="comment-list">

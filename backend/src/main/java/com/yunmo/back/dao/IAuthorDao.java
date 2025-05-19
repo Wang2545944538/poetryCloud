@@ -3,7 +3,7 @@ package com.yunmo.back.dao;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunmo.back.pojo.Author;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.yunmo.back.utileClass.DynastyAuthor;
+import com.yunmo.back.VO.DynastyAuthor;
 
 import java.util.List;
 

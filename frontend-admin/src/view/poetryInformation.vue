@@ -333,25 +333,25 @@ const searchPoemByTitle = () => {
       <el-table-column
           prop="title"
           label="题目"
-          min-width="120"
+          min-width="100"
       />
       <el-table-column
           prop="author.author_name"
           label="作者"
-          min-width="80"
+          min-width="40"
       />
       <el-table-column
           prop="intro"
           label="介绍"
-          min-width="120"
+          min-width="100"
       />
       <el-table-column
           label="操作"
-          width="120"
+          width="160"
       >
         <template #default="scope">
-          <el-button type="primary" size="small" @click="editPoem(scope.row.poem_id)">编辑</el-button>
-          <el-button type="danger" size="small" @click="deletePoem(scope.row.poem_id)">删除</el-button>
+          <el-button type="primary" size="middle" @click="editPoem(scope.row.poem_id)">编辑</el-button>
+          <el-button type="danger" size="middle" @click="deletePoem(scope.row.poem_id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>

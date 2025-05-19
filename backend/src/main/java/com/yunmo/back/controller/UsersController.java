@@ -6,11 +6,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yunmo.back.common.ResponseMsg;
 import com.yunmo.back.pojo.Users;
 import com.yunmo.back.service.IUsersService;
-import com.yunmo.util.JwtUtils;
-import com.yunmo.util.RedisUtils;
-import com.yunmo.util.ResponseMsg;
+import com.yunmo.back.util.JwtUtils;
+import com.yunmo.back.util.RedisUtils;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -54,7 +54,7 @@ public class UsersController {
                     "','avatar':'" + u.getAvatar() +
                     "','type_id':" + u.getType_id() + "}";
 
-            String jwtToken = JwtUtils.createJWT(uuid, subject, 1000 * 60 * 3000); // 30分钟
+            String jwtToken = JwtUtils.createJWT(uuid, subject, 1000 * 60 * 3000); // 3000分钟
             redisUtils.set(jwtToken, users, 100000);
             return ResponseMsg.loginSuccess(jwtToken);
         }else {

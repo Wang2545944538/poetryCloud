@@ -89,7 +89,7 @@ const getList=()=>{
       console.log("数据为空")
     }
   }).catch(err => {
-    console.log(err.data)
+    console.log(err)
   })
 }
 // 先是发个请求获取用户的诗集数据

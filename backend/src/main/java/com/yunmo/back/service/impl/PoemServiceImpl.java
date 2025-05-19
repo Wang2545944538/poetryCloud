@@ -7,10 +7,10 @@ import com.yunmo.back.dao.IPoemDao;
 import com.yunmo.back.pojo.Poeminformation;
 import com.yunmo.back.service.IPoemService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.yunmo.back.utileClass.PoemDTO;
-import com.yunmo.back.utileClass.PoemMy;
-import com.yunmo.back.utileClass.aPoem;
-import com.yunmo.back.utileClass.uPoem;
+import com.yunmo.back.VO.PoemDTO;
+import com.yunmo.back.VO.PoemMy;
+import com.yunmo.back.VO.aPoem;
+import com.yunmo.back.VO.uPoem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -139,11 +139,18 @@ public class PoemServiceImpl extends ServiceImpl<IPoemDao, Poem> implements IPoe
         return poemDao.findByIdPoems(id);
     }
 
-    // 管理员审核自创诗
+    // 查询所有未审核的自创诗
     @Override
-    public IPage<PoemDTO> adminCheckPoem(int page, int limit) {
+    public IPage<PoemDTO> getUncheckedPoems(int page, int limit) {
         Page<PoemDTO> poemPage = new Page<>(page, limit);
-        return poemDao.adminCheckPoem(poemPage);
+        return poemDao.UncheckedPoems(poemPage);
+    }
+
+    // 查询所有已审核的自创诗
+    @Override
+    public IPage<PoemDTO> getCheckedPoems(int page, int limit) {
+        Page<PoemDTO> poemPage = new Page<>(page, limit);
+        return poemDao.CheckedPoems(poemPage);
     }
 
     // 管理员审核通过，将poem表中的status字段由0改为1

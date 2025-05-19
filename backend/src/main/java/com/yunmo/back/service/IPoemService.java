@@ -1,15 +1,12 @@
 package com.yunmo.back.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yunmo.back.controller.PoemController;
 import com.yunmo.back.pojo.Poem;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.yunmo.back.utileClass.PoemDTO;
-import com.yunmo.back.utileClass.PoemMy;
-import com.yunmo.back.utileClass.aPoem;
-import com.yunmo.back.utileClass.uPoem;
-import org.apache.ibatis.annotations.Param;
+import com.yunmo.back.VO.PoemDTO;
+import com.yunmo.back.VO.PoemMy;
+import com.yunmo.back.VO.aPoem;
+import com.yunmo.back.VO.uPoem;
 
 import java.util.List;
 
@@ -41,8 +38,12 @@ public interface IPoemService extends IService<Poem> {
 
     List<Poem> findByIdPoems(Integer id);
 
-    // 管理员审核自创诗
-    IPage<PoemDTO> adminCheckPoem(int page, int limit);
+    // 查询所有未审核的自创诗
+    IPage<PoemDTO> getUncheckedPoems(int page, int limit);
+
+    // 查询所有已审核的自创诗
+    IPage<PoemDTO> getCheckedPoems(int page, int limit);
+
 
     // 管理员审核通过，将poem表中的status字段由0改为1
     Integer adminPassPoem(Integer poem_id);

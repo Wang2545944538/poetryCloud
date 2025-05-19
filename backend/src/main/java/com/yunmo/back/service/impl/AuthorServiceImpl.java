@@ -5,7 +5,7 @@ import com.yunmo.back.pojo.Author;
 import com.yunmo.back.dao.IAuthorDao;
 import com.yunmo.back.service.IAuthorService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.yunmo.back.utileClass.DynastyAuthor;
+import com.yunmo.back.VO.DynastyAuthor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

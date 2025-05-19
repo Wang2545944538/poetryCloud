@@ -1,8 +1,8 @@
 package com.yunmo.back.controller;
 
 
+import com.yunmo.back.common.ResponseMsg;
 import com.yunmo.back.service.IDynastyService;
-import com.yunmo.util.ResponseMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 

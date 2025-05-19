@@ -8,10 +8,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yunmo.back.pojo.Users;
 import com.yunmo.back.pojo.Users_collection;
 import com.yunmo.back.service.IUsers_collectionService;
-import com.yunmo.util.JwtUtils;
+import com.yunmo.back.util.JwtUtils;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,6 +39,7 @@ public class Users_collectionController {
         Page<CollectionController> page1 =new Page<>(page,limit);
         String token=request.getHeader("token");
         Claims claims = JwtUtils.parseJWT(token);
+
         int userId = JSONObject.parseObject(claims.getSubject(), Users.class).getUser_id();
         QueryWrapper<Users_collection> wrapper = new QueryWrapper<>();
         wrapper.eq("user_id",userId);

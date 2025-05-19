@@ -79,7 +79,7 @@ const login=() =>{
       //获取头像地址
       const avatar = subObj.avatar;
       localSet('avatar',avatar)
-      window.location.href = '/'
+      window.location.href = '/user/'
     } else {
       ElMessage({
         showClose: true,

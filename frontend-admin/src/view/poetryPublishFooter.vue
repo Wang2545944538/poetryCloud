@@ -25,11 +25,11 @@ onMounted(() => {
 
 const formatStatus = (row, column, cellValue, index) => {
   if (cellValue == 1) {
-    return '已上架';
+    return '审核通过';
   }else if (cellValue == 2) {
     return '审核未通过';
   } else if (cellValue == 3) {
-    return '已下架';
+    return '已删除';
   }
   // 如果有其他状态，也可以在这里添加
   return cellValue; // 默认返回原始值

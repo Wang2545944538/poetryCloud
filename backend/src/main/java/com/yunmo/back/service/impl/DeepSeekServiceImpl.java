@@ -2,12 +2,12 @@ package com.yunmo.back.service.impl;
 
 import com.yunmo.back.config.DeepSeekConfig;
 import com.yunmo.back.service.IDeepSeekService;
-import com.yunmo.back.utileClass.ChatResponse;
+import com.yunmo.back.VO.ChatResponse;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.http.Method;
 import cn.hutool.json.JSONUtil;
-import com.yunmo.back.utileClass.ChatRequest;
+import com.yunmo.back.VO.ChatRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

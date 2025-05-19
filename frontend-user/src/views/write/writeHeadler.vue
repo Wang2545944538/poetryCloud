@@ -3,13 +3,37 @@
 import writeImage from '/images/write/images.webp';
 import router from "@/routes/index.js";
 import {Plus} from "@element-plus/icons-vue"; // 使用别名@指向src目录
+import { ElMessage } from 'element-plus'; // 引入提示组件
+
+const isLogin = () => {
+  return !!localStorage.getItem('token'); // 假设登录后设置了 token
+};
 
 const handleAdd = () => {
-  router.push({ path: '/addWrite' })
-}
+  if (!isLogin()) {
+    ElMessage({
+      message: '请先登录后再进行创作操作',
+      type: 'warning',
+      duration: 3000  // 提示停留 3 秒
+    });
+    router.push({ path: '/login' });
+    return;
+  }
+  router.push({ path: '/addWrite' });
+};
+
 const handleMy = () => {
-  router.push({ path: '/myWrite' })
-}
+  if (!isLogin()) {
+    ElMessage({
+      message: '请先登录后再查看我的创作',
+      type: 'warning',
+      duration: 3000
+    });
+    router.push({ path: '/login' });
+    return;
+  }
+  router.push({ path: '/myWrite' });
+};
 </script>
 
 <template>
