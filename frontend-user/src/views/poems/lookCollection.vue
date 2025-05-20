@@ -83,9 +83,9 @@ const changePage=(page)=>{
       <button  class="back-button">返回诗集</button></router-link>
       {{data.name}}
 
-      <svg @click="changeStar" width="100" height="100" viewBox="-10 -10 100 100" xmlns="http://www.w3.org/2000/svg">
+      <!-- <svg @click="changeStar" width="100" height="100" viewBox="-10 -10 100 100" xmlns="http://www.w3.org/2000/svg">
         <polygon points="50,15 61,35 85,35 66,50 72,75 50,60 28,75 34,50 15,35 39,35" :fill= "data.fill" stroke="black"/>
-      </svg>
+      </svg> -->
     </h1>
   </div>
 <div class="c1">

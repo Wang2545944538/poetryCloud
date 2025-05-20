@@ -229,7 +229,7 @@ public class CollectionController {
         boolean removeSuccess2 = users_collectionService.removeByMap(columnMap);
         boolean removeSuccess3 = poem_collectionService.removeByMap(columnMap);
 
-        if (removeSuccess1 && removeSuccess2 && removeSuccess3) {
+        if (removeSuccess1 && removeSuccess2) {
             return new ResponseMsg(200, "删除成功");
         }
         return new ResponseMsg(201, "删除失败");

@@ -1,5 +1,5 @@
 <template>
-    <div class="title">点击进入历朝著名诗人足迹</div>
+    <!-- <div class="title">点击进入历朝著名诗人足迹</div>
     <div class="controls">
         <button class="scroll-btn" id="left-btn" @click="scrollLeft">&#10094;</button>
         <div class="history_bigbox" id="history-bigbox">
@@ -12,7 +12,8 @@
             </div>
         </div>
         <button class="scroll-btn" id="right-btn" @click="scrollRight">&#10095;</button>
-    </div>
+    </div> -->
+    <div></div>
 </template>
 <script setup>
 import { computed, onMounted, reactive, ref, watch } from 'vue';
@@ -191,12 +192,12 @@ const scrollLeft = () => {
         inset 0 0 0x rgba(255, 255, 255, .9),
         inset 0 0 0 rgba(0, 0, 0, .4);
 
-    &:active {
+    /* &:active {
         box-shadow:
             0 0 0 rgba(0, 0, 0, .4),
             0 0 0 rgba(255, 255, 255, .9),
             inset -7px -7px 12px rgba(255, 255, 255, .9),
             inset 7px 7px 12px rgba(0, 0, 0, .4);
-    }
+    } */
 }
 </style>

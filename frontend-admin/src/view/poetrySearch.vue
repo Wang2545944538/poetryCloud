@@ -1,10 +1,10 @@
 <script  lang="ts" setup>
-import axios from '@/utils/axios'
+import axios from '../utils/axios'
 import {reactive, onMounted, ref, onBeforeUnmount} from 'vue'
 import {ElMessage, UploadProps} from 'element-plus'
 import WangEditor from 'wangeditor'
 import {client,getFileNameUUID} from '../utils/alioss.js';
-import {localGet} from "@/utils/index.js";
+import {localGet} from "../utils/index.js";
 import {Plus} from "@element-plus/icons-vue";
 
 

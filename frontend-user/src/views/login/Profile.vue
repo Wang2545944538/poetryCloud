@@ -136,9 +136,9 @@ const toAvatar=()=>{
 
 
     <div class="items">
-      <span @click="goto(0)" :class="{active: $route.path === '/profile/like'}">我喜欢</span>
       <span @click="goto(1)" :class="{active: $route.path === '/profile/sheet'}">我的诗集</span>
       <span @click="goto(4)" :class="{active: $route.path === '/profile/MyWrite'}">我的创作</span>
+      <span @click="goto(0)" :class="{active: $route.path === '/profile/like'}">我喜欢</span>
       <span @click="goto(2)" :class="{active: $route.path === '/profile/recent'}">历史记录</span>
       <span @click="goto(3)" :class="{active: $route.path === '/'}">返回主页</span>
     </div>

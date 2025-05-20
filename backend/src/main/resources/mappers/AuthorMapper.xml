@@ -10,7 +10,7 @@
         <result column="author_style" property="author_style"></result>
         <association property="dynasty" column="dynasty_id" select="com.yunmo.back.dao.IDynastyDao.selectById"></association>
     </resultMap>
-    <select id="findByDynastyidAuthor" resultType="com.yunmo.back.utileClass.DynastyAuthor">
+    <select id="findByDynastyidAuthor" resultType="com.yunmo.back.VO.DynastyAuthor">
         select * from author t1 ,dynasty t2 where t1.dynasty_id=t2.dynasty_id and t1.dynasty_id=#{id}
     </select>
     <select id="findDynastyAuthorByPage" resultMap="map">

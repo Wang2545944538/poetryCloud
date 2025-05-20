@@ -209,7 +209,7 @@ const submitRegister = async () => {
     axios.post("/users/register", payload).then(res => {
       if (res.code === 200) {
         ElMessage.success("注册成功");
-        window.location.href = '/login';
+        window.location.href = '/user/login';
       } else {
         ElMessage.error("注册失败");
       }

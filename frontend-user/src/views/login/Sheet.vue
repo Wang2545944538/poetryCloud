@@ -1,5 +1,5 @@
 <script setup>
-import {ElMessage} from "element-plus";
+import {ElMessage,ElMessageBox} from "element-plus";
 import {computed, onMounted,reactive, ref} from "vue";
 import axios from "@/utils/axios";
 
@@ -16,9 +16,6 @@ const state = reactive({
 
 })
 const route = useRoute()
-function ready() {
-  ElMessage.info('该功能待开发')
-}
 function openMask() {
   // 新建诗集操作 页面稍微变灰，屏幕中间有一个诗集名输入框
   document.getElementById('mask').style.display = 'flex'
@@ -42,9 +39,8 @@ function newSheet() {
     axios.post("/collection/addPoems",formData).then((res)=>{
       if (res.code==200) {
         ElMessage.success("成功添加到新建诗集")
-        // 将新创建的诗集添加到列表中
-        sheetInfo.value.push(newFolder);
-        quitMask()
+        quitMask();      // 关闭新建窗口
+        getList();       // 刷新诗集列表
       } else {
         ElMessage.error("创建失败,诗集已存在")
       }
@@ -71,27 +67,44 @@ const remainWords = computed(() => {
 function cancel() {
   quitMask()
 }
-const getList=()=>{
 
+function goTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+
+const getList = () => {
+  state.loading = true;
   axios.get("/users_collection/list", {
     params: {
       page: state.currentPage,
       limit: state.pageSize
-    }}).then((res)=>{
-    console.log(res.records[0].collection)
-    if (res.records){
-      sheetInfo.value=res.records
-      state.total = res.total //总计入数
-      state.currentPage = res.current
-      state.loading = false
-      goTop && goTop()
-    }else {
-      console.log("数据为空")
+    }
+  }).then(res => {
+    if (res.records && res.records.length > 0) {
+      sheetInfo.value = res.records;
+      state.total = res.total;
+      state.currentPage = res.current;
+      state.loading = false;
+      goTop?.();
+    } else {
+      // 如果当前页无数据，且当前页不是第一页
+      if (state.currentPage > 1) {
+        state.currentPage--;
+        getList(); // 重新请求上一页数据
+      } else {
+        // 第一页也没数据，清空列表
+        sheetInfo.value = [];
+        state.total = 0;
+        state.loading = false;
+      }
     }
   }).catch(err => {
-    console.log(err)
-  })
-}
+    console.log(err);
+    state.loading = false;
+  });
+};
+
 // 先是发个请求获取用户的诗集数据
 onMounted(()=> {
   getList();
@@ -111,6 +124,99 @@ const changePage = (val) => {
   getList()
 }
 
+// 假设item是完整的诗集对象
+const editForm = reactive({}); // 一开始为空
+
+function editSheet(item) {
+  state.showEditRoleDialog = true;
+  // 用完整item数据初始化editForm（浅拷贝）
+  Object.assign(editForm, item);
+}
+
+function confirmEdit() {
+  if (editForm.collection_name.trim() === "") {
+    ElMessage.error("请输入诗集名！");
+    return;
+  }
+  if (editForm.collection_name.length > 20) {
+    ElMessage.error("诗集名最多20个字！");
+    return;
+  }
+
+  axios.post("/collection/update", editForm).then(res => {
+    if (res.code === 200) {
+      ElMessage({
+        type: "success",
+        duration: 2000,
+        message: "修改成功"
+      });
+      // 清空editForm字段
+      for (const key in editForm) {
+        editForm[key] = '';
+      }
+      state.showEditRoleDialog = false;
+      changePage(state.currentPage);
+    } else {
+      ElMessage({
+        type: "error",
+        message: "修改失败",
+        duration: 2000
+      });
+    }
+  }).catch(err => {
+    console.error("修改异常：", err);
+    ElMessage({
+      type: "error",
+      message: "请求失败，请稍后再试",
+      duration: 2000
+    });
+  });
+}
+
+
+function cancelEdit() {
+  state.showEditRoleDialog = false;
+}
+
+function deleteSheet(id) {
+  ElMessageBox.confirm(
+    '此操作将永久删除该诗集，是否继续？',
+    '提示',
+    {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning',
+    }
+  ).then(() => {
+    axios.post("/collection/delete", id).then(res => {
+      if (res.code === 200) {
+        ElMessage({
+          message: '删除成功',
+          duration: 2000,
+          type: 'success',
+        });
+        getList(); // 重新获取列表
+      } else {
+        ElMessage({
+          message: "删除失败",
+          duration: 2000,
+          type: "error",
+        });
+      }
+    }).catch(err => {
+      console.error("删除异常：", err);
+      ElMessage({
+        message: "请求失败，请稍后再试",
+        duration: 2000,
+        type: "error"
+      });
+    });
+  }).catch(() => {
+    ElMessage.info('已取消删除');
+  });
+}
+
+
 </script>
 
 <template>
@@ -121,21 +227,25 @@ const changePage = (val) => {
       <el-button @click="openMask()" class="function" type="default">
         <i class="add"></i>新建诗集
       </el-button>
-      <el-button @click="ready()" class="function" type="default">待开发按钮</el-button>
     </div>
     <div style="margin-top: 20px">
       <div class="header">
-        <span style="width: 577px;padding-left: 20px">诗集</span>
-        <span style="width: 422px;padding-left: 20px">诗集数量</span>
+        <span style="width: 400px;padding-left: 20px">诗集</span>
+        <span style="width: 200px;padding-left: 20px">诗集数量</span>
+        <span style="width: 400px;padding-left: 20px">操作</span>
       </div>
 
       <div class="con" v-for="(item,index) in sheetInfo" :key="index" >
 
-        <div style="width: 577px;display: flex;align-items: center;" >
+        <div style="width: 400px;display: flex;align-items: center;" >
           <img width="50" height="50"  :src=getPublicImageUrl(item.collection[0].collection_avatar)>
           <div @click="gotoDetail(item.collection_id)" class="text" style="text-indent: 15px;">{{ item.collection[0].collection_name }}</div>
         </div>
-        <div>{{ item.collection[0].collection_count }}首</div>
+        <div style="width: 200px;">{{ item.collection[0].collection_count }}首</div>
+        <div style="width: 400px;">
+          <el-button size="large" @click="editSheet(item)">修改</el-button>
+          <el-button size="large" type="danger" @click="deleteSheet(item.collection_id)">删除</el-button>
+        </div>
     </div>
 
 
@@ -168,7 +278,29 @@ const changePage = (val) => {
       </div>
     </div>
   </div>
+
+  <el-dialog
+    title="修改诗集"
+    v-model="state.showEditRoleDialog"
+    width="500px"
+    :before-close="cancelEdit"
+  >
+    <div style="margin-bottom: 10px">请输入新的诗集名：</div>
+    <div class="wrapper">
+      <input class="addSheetInput" v-model="editForm.collection_name" />
+      <span :class="{colorRed : editRemainWords < 0}"
+            style="position: absolute;font-weight: 400;color: rgb(153, 153, 153);right: 18px;">
+        {{ editRemainWords }}
+      </span>
+    </div>
+    <template #footer>
+      <el-button @click="cancelEdit">取消</el-button>
+      <el-button type="primary" @click="confirmEdit">确认修改</el-button>
+    </template>
+  </el-dialog>
 </template>
+
+
 
 <style scoped>
 
