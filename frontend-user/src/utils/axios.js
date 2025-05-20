@@ -5,7 +5,7 @@ import { localGet } from './index'
 
 // 创建实例
 const service = axios.create({
-  baseURL: 'http://127.0.0.1:5180/', // 统一接口前缀
+  baseURL: 'http://118.31.229.234:5180/', // 统一接口前缀
   withCredentials: true,
   headers: {
     'X-Requested-With': 'XMLHttpRequest',
