@@ -22,6 +22,7 @@ public class ResponseMsg implements Serializable {
     public ResponseMsg(int code, String msg) {
         this.code = code;
         this.msg = msg;
+        this.data = msg;
     }
 
     public ResponseMsg(int code, String msg, Object data) {
@@ -45,20 +46,12 @@ public class ResponseMsg implements Serializable {
         return new ResponseMsg(200, msg, data);
     }
 
-    public static ResponseMsg error(int code, String msg) {
-        return new ResponseMsg(code, msg, null);
-    }
-
-    public static ResponseMsg error(String msg) {
-        return new ResponseMsg(500, msg, null);
-    }
-
     public static ResponseMsg fail(String msg) {
-        return new ResponseMsg(201, msg, null);
+        return new ResponseMsg(201, msg, msg);
     }
 
     public static ResponseMsg fail(int code, String msg) {
-        return new ResponseMsg(code, msg, null);
+        return new ResponseMsg(code, msg, msg);
     }
 
     public static ResponseMsg loginSuccess(String token){

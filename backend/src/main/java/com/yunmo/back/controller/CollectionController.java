@@ -101,6 +101,12 @@ public class CollectionController {
         for (Users_collection u:list1){
             list2.add(u.getCollection_id());
         }
+
+        // 如果用户没有任何收藏，返回空列表而不是调用 listByIds
+        if (list2.isEmpty()) {
+            return new ResponseMsg(200, new ArrayList<>());
+        }
+
         return new ResponseMsg(200,collectionService.listByIds(list2));
     }
     //收藏
@@ -123,6 +129,12 @@ public class CollectionController {
     public ResponseMsg doCollection(@RequestBody doCl doCl){
         Integer collection_id = doCl.getSelectedCollectionId();
         Integer poem_id = doCl.getPoem_id();
+
+        // 判断 collection 是否存在
+        Collection collection = collectionService.getById(collection_id);
+        if (collection == null) {
+            return new ResponseMsg(201, "收藏失败：诗集不存在");
+        }
 
         QueryWrapper<Poem_collection> wrapper = new QueryWrapper<>();
         wrapper.eq("collection_id", collection_id);
