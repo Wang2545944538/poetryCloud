@@ -252,7 +252,7 @@ const searchPoems = () => {
     return;
   }
 
-  state.input=input.keyword;
+  state.input=keyword;
   getPoems();
 }
 
