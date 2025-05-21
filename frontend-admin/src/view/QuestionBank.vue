@@ -237,7 +237,7 @@ const getChecked =() =>{
   let id = selectAry.map(item => item.questionBank_id);
   console.log(id)
   axios.post("/questionbank/deleteAll",id).then(res =>{
-    if (res == 200){
+    if (res.code == 200){
       ElMessage({
         showClose:true,
         message:"删除成功",

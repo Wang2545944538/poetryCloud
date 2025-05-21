@@ -144,17 +144,13 @@ public class UsersController {
     ResponseMsg updateUser(@RequestBody Users users){
         if (users!=null){
             UpdateWrapper<Users> wrapper=new UpdateWrapper<>();
-           if (users.getAvatar()!=null && users.getAvatar().isEmpty()) {
+           if (users.getAvatar()!=null && !users.getAvatar().isEmpty()) {
                wrapper.set("avatar",users.getAvatar());
            }
-           if (users.getNickname()!=null && users.getNickname().isEmpty()) {
+           if (users.getNickname()!=null && !users.getNickname().isEmpty()) {
                wrapper.set("nickname",users.getNickname());
-           }if (users.getPhoneNumber()!=null && users.getPhoneNumber().isEmpty()) {
+           }if (users.getPhoneNumber()!=null && !users.getPhoneNumber().isEmpty()) {
                wrapper.set("phoneNumber",users.getPhoneNumber());
-           }if (users.getMoney()!=null ) {
-               wrapper.set("money",users.getMoney());
-           }if (users.getPoint()!=null) {
-               wrapper.set("point",users.getPoint());
            }
            wrapper.eq("user_id",users.getUser_id());
            usersService.update(wrapper);

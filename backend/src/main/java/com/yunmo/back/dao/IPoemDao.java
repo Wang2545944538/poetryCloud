@@ -51,7 +51,7 @@ public interface IPoemDao extends BaseMapper<Poem> {
                     @Param("theme_id") Integer theme_id, @Param("intro") String intro,
                     @Param("pf_id") Integer pf_id);
     // 查询所有自创诗
-    @Select("SELECT a.title, a.content, b.avatar ,b.nickname FROM poem a LEFT JOIN users b ON a.author_id = b.user_id WHERE a.isself = 1")
+    @Select("SELECT a.title, a.content, b.avatar ,b.nickname FROM poem a LEFT JOIN users b ON a.author_id = b.user_id WHERE a.isself = 1 AND a.status = 1")
     IPage<PoemDTO> selectAllMyPoems(IPage<PoemDTO> page);
 
     // 查询我的已发布自创诗

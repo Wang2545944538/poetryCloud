@@ -173,7 +173,7 @@ const add=()=>{
         img: "",
         oriFileName: '', //保存上传原始文件
       }
-      data.showAddDialog=f
+      data.showAddDialog=false
       changePage(data.page);
     } else {
       ElMessage({
@@ -320,55 +320,92 @@ if (max.value>count.value){
   })
 }}
 
-const editPoems=()=>{
-// 确保 data.defaultCheckedPoems 是一个数组
-  data.defaultCheckedPoems = data.defaultCheckedPoems || [];
+// const editPoems=()=>{
+// // 确保 data.defaultCheckedPoems 是一个数组
+//   data.defaultCheckedPoems = data.defaultCheckedPoems || [];
+
+//   data.addPoems.forEach(poem => {
+//     // 如果 defaultCheckedPoems 是空数组，或者 poem 被选中且不在 defaultCheckedPoems 中
+//     if (data.defaultCheckedPoems.length === 0 || (poem.checked && !data.defaultCheckedPoems.includes(poem))) {
+//       data.defaultCheckedPoems.push(poem);
+//       console.log("defaultCheckedPoems:", data.defaultCheckedPoems);
+//     }
+//   });
+
+
+//   axios.post("/collection/poemsUpdate",{
+//       "collection_id":data.collection_id,
+//       "poems":data.defaultCheckedPoems,
+//     }).then(res=>{
+//       if(res.code===200){
+//         ElMessage({
+//           type:'success',
+//           duration:2000,
+//           message:"操作成功",
+//           onClose() {
+//               data.collection_id = '';
+//               data.defaultCheckedPoems =[];
+//               data.addPoems=[];
+//               count.value=5;
+//               data.showAddPoemsDialog=false;
+//               changePage(data.page);
+//           },
+
+
+//         })
+
+//       }else {
+//         ElMessage({
+//           type:'error',
+//           duration:2000,
+//           message:"操作失败",
+
+//         })
+
+//       }
+
+//   })
+
+const editPoems = () => {
+  // 收集当前勾选的诗词（去重）
+  const selectedPoemsMap = new Map();
 
   data.addPoems.forEach(poem => {
-    // 如果 defaultCheckedPoems 是空数组，或者 poem 被选中且不在 defaultCheckedPoems 中
-    if (data.defaultCheckedPoems.length === 0 || (poem.checked && !data.defaultCheckedPoems.includes(poem))) {
-      data.defaultCheckedPoems.push(poem);
-      console.log("defaultCheckedPoems:", data.defaultCheckedPoems);
+    if (poem.checked) {
+      // 使用 poem_id 作为 key 去重
+      selectedPoemsMap.set(poem.poem_id, poem);
     }
   });
 
+  // 将 Map 转成去重后的数组
+  const selectedPoems = Array.from(selectedPoemsMap.values());
 
-  axios.post("/collection/poemsUpdate",{
-      "collection_id":data.collection_id,
-      "poems":data.defaultCheckedPoems,
-    }).then(res=>{
-      if(res.code===200){
-        ElMessage({
-          type:'success',
-          duration:2000,
-          message:"操作成功",
-          onClose() {
-              data.collection_id = '';
-              data.defaultCheckedPoems =[];
-              data.addPoems=[];
-              count.value=5;
-              data.showAddPoemsDialog=false;
-              changePage(data.page);
-          },
-
-
-        })
-
-      }else {
-        ElMessage({
-          type:'error',
-          duration:2000,
-          message:"操作失败",
-
-        })
-
-      }
-
-  })
-
-
-
-
+  axios.post("/collection/poemsUpdate", {
+    collection_id: data.collection_id,
+    poems: selectedPoems
+  }).then(res => {
+    if (res.code === 200) {
+      ElMessage({
+        type: 'success',
+        duration: 2000,
+        message: "操作成功",
+        onClose() {
+          data.collection_id = '';
+          data.defaultCheckedPoems = [];
+          data.addPoems = [];
+          count.value = 5;
+          data.showAddPoemsDialog = false;
+          changePage(data.page);
+        }
+      });
+    } else {
+      ElMessage({
+        type: 'error',
+        duration: 2000,
+        message: "操作失败",
+      });
+    }
+  });
 }
 
 </script>

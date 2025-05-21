@@ -116,7 +116,7 @@ onMounted(async () => {
     fetchData();
 });
 const dynastyoptions = [
-    { label: "先秦", value: 0 },
+    { label: "先秦", value: 13 },
     { label: "秦朝", value: 1 },
     { label: "汉朝", value: 2 },
     { label: "三国", value: 3 },

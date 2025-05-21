@@ -8,7 +8,7 @@
           <el-input style="width: 300px" v-model="state.activeFrom.active_content" placeholder="请输入活动标题" ></el-input>
         </el-form-item>
         <el-form-item label="活动简介" prop="active_profile">
-          <el-input type="text" style="width: 300px" v-model="state.activeFrom.active_profile" placeholder="请输入答案"></el-input>
+          <el-input type="text" style="width: 300px" v-model="state.activeFrom.active_profile" placeholder="请输入活动简介"></el-input>
         </el-form-item>
 
         <!-- 选项输入框 -->
@@ -91,6 +91,7 @@ const submitAdd = () => {
   goodRef.value.validate((valid) => {
     if (valid) {
       axios.post("activity/addActivity",state.activeFrom).then(res => {
+        console.log(res)
         if (res.code == 200) {
           ElMessage({
             showClose:true,

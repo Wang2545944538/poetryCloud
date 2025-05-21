@@ -23,7 +23,7 @@ const init = () =>{
   })//正确响应后的回调函数,响应内容封装到res变量中
       .then(res=>{
         //res.data 是axios封装的一个属性
-        console.log(res.data);
+        console.log(res.records);
         //把数据赋值给tableData
         data.tableData = res.records;
         data.total = res.total; //总记录数

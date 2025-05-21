@@ -32,25 +32,25 @@
       <el-table-column
           prop="user_id"
           label="用户编号"
-          width="100px"
+          width="150px"
           align="center"
       >
       </el-table-column>
       <el-table-column
           prop="nickname"
           label="昵称"
-          width="100px"
+          width="150px"
           align="center"
       >
       </el-table-column>
       <el-table-column
           prop="username"
           label="账号"
-          width="100px"
+          width="150px"
           align="center"
       >
       </el-table-column>
-      <el-table-column
+      <!-- <el-table-column
           prop="money"
           label="金额"
           width="100px"
@@ -63,11 +63,11 @@
           width="100px"
           align="center"
       >
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column
           prop="phoneNumber"
           label="电话号码"
-          width="150px"
+          width="250px"
           align="center"
       >
       </el-table-column>
@@ -112,14 +112,14 @@
       <el-form-item label="电话号码"  >
         <el-input v-model="updateUserFrom.phoneNumber" placeholder="请输入电话号码" style="width: 50%" ></el-input>
       </el-form-item>
-      <el-form-item label="金额"  >
+      <!-- <el-form-item label="金额"  >
         <el-input v-model="updateUserFrom.money" placeholder="请输入金额" style="width: 50%" ></el-input>
       </el-form-item>
       <el-form-item label="积分"  >
         <el-input v-model="updateUserFrom.point" placeholder="请输入积分" style="width: 50%" ></el-input>
-      </el-form-item>
+      </el-form-item> -->
 
-      <el-form-item label="图片" >
+      <!-- <el-form-item label="图片" >
         <el-upload
             class="avatar-uploader"
             :http-request="uploadURL"
@@ -135,7 +135,7 @@
           >
           <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
         </el-upload>
-      </el-form-item>
+      </el-form-item> -->
       <!-- 可以根据需要添加更多的表单项 -->
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -172,9 +172,7 @@ let updateUserFrom=reactive({
   nickname:"",
   avatar:'',
   phoneNumber:'',
-  money:0,
   user_id:0,
-  point:0,
 })
 onMounted(() => {
   getUserList();
@@ -210,9 +208,7 @@ const editRoles = (user) => {
   state.showEditRoleDialog=true
   updateUserFrom.user_id=user.user_id
   updateUserFrom.nickname=user.nickname
-  updateUserFrom.money=user.money
   updateUserFrom.phoneNumber=user.phoneNumber
-  updateUserFrom.point=user.point
   addForm.img=getPrefixedImage(user.avatar)
   oldImg = user.avatar
 }

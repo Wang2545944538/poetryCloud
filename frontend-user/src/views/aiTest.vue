@@ -1,7 +1,7 @@
 <script setup>
 import Headler from "@/views/headler.vue";
 import { ref, watch } from 'vue'
-import axios from "axios";
+import axios from "@/utils/axios.js";
 import { ttsAxios } from "@/utils/axios.js"
 
 

@@ -303,10 +303,11 @@ const deleteQuestion = (id) => {
 
 const getChecked =() =>{
   const selectAry =tableRef.value.getSelectionRows();
-  let id = selectAry.map(item => item.questionBank_id);
+  console.log(selectAry)
+  let id = selectAry.map(item => item.active_id);
   console.log(id)
   axios.post("/activity/deleteAllActivity",id).then(res =>{
-    if (res == 200){
+    if (res.code == 200){
       ElMessage({
         showClose:true,
         message:"删除成功",
