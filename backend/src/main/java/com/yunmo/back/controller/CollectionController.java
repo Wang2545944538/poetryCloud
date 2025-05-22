@@ -12,6 +12,7 @@ import com.yunmo.back.pojo.*;
 import com.yunmo.back.pojo.Collection;
 import com.yunmo.back.service.ICollectionService;
 import com.yunmo.back.service.ILikeService;
+import com.yunmo.back.service.IPoemService;
 import com.yunmo.back.service.IUsers_collectionService;
 import com.yunmo.back.service.impl.PoemServiceImpl;
 import com.yunmo.back.service.impl.Poem_collectionServiceImpl;
@@ -49,7 +50,9 @@ public class CollectionController {
     IUsers_collectionService users_collectionService;
 
     @Autowired
-    PoemServiceImpl poemService;
+    IPoemService poemService;
+    /*@Autowired
+    PoemServiceImpl poemService;*/
 
     @Autowired
     ILikeService likeService;
